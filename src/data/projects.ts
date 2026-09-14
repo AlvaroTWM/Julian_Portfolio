@@ -40,7 +40,6 @@ export const projects: Project[] = [
 		href: 'https://backoffice-portafolio.vercel.app/',
 		image: '/projects/loyalty-hub.jpg',
 		profileImage: '/projects/loyalty-hub-profile.png',
-		icon: '/icons/money-bag.png',
 	},
 	{
 		id: 'stand-in-2',
