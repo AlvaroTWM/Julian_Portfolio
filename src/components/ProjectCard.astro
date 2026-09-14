@@ -1,0 +1,63 @@
+---
+import type { Project } from '../data/projects.ts';
+
+interface Props {
+	project: Project;
+	standIn?: boolean;
+}
+
+const { project, standIn = false } = Astro.props;
+const tagsAttr = project.tags.join(' ');
+---
+
+<article
+	class:list={[
+		'project-card',
+		{ 'project-card--featured': project.featured, 'project-card--stand-in': standIn },
+	]}
+	data-project-tags={tagsAttr}
+>
+	<div class="project-card__preview" aria-hidden="true">
+		<span class="project-card__placeholder-label">{project.title}</span>
+	</div>
+	{
+		standIn ? null : (
+			<div class="project-card__body">
+				<div class="project-card__tags">
+					{project.tags.map((tag) => (
+						<span class="tag">{tag}</span>
+					))}
+				</div>
+				<h3 class="project-card__title">{project.title}</h3>
+				<dl class="project-card__meta">
+					<div>
+						<dt>Problema</dt>
+						<dd>{project.problem}</dd>
+					</div>
+					<div>
+						<dt>Tecnologías</dt>
+						<dd>{project.technologies.join(' · ')}</dd>
+					</div>
+					<div>
+						<dt>Impacto</dt>
+						<dd>{project.impact}</dd>
+					</div>
+				</dl>
+				{project.href ? (
+					<a class="project-card__link" href={project.href}>
+						Ver proyecto
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+							<path
+								d="M7 17L17 7M17 7H9M17 7v8"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							/>
+						</svg>
+					</a>
+				) : null}
+			</div>
+		)
+	}
+</article>

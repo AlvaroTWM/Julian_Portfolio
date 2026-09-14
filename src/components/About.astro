@@ -1,0 +1,13 @@
+---
+import { about } from '../data/site.ts';
+---
+
+<section class="section section--about" id="sobre-mi" aria-labelledby="about-heading">
+	<div class="section-header section-header--left">
+		<h2 class="section-title" id="about-heading">{about.title}</h2>
+	</div>
+	<p class="about-text">{about.body}</p>
+	<ul class="about-highlights">
+		{about.highlights.map((item) => <li>{item}</li>)}
+	</ul>
+</section>

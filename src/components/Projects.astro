@@ -1,0 +1,67 @@
+---
+import ProjectCard from './ProjectCard.astro';
+import { projectFilters, projects, projectsSection } from '../data/projects.ts';
+
+const { standIn } = projectsSection;
+---
+
+<section
+	class:list={['section', 'section--projects', { 'section--stand-in': standIn }]}
+	id="proyectos"
+	aria-labelledby="projects-heading"
+>
+	<header class="section-header">
+		<h2 class="section-title" id="projects-heading">
+			<span class="projects-title-line">{projectsSection.titleLine1}</span>
+			<span class="projects-title-line projects-title-line--muted">{projectsSection.titleLine2}</span>
+		</h2>
+		<p class="section-subtitle">{projectsSection.subtitle}</p>
+		{standIn ? <p class="stand-in-badge">Stand-in</p> : null}
+	</header>
+
+	{
+		!standIn ? (
+			<div class="project-filters" role="group" aria-label="Filtrar proyectos">
+				{projectFilters.map((filter, index) => (
+					<button
+						type="button"
+						class:list={['filter-btn', { 'filter-btn--active': index === 0 }]}
+						data-project-filter={filter.id}
+					>
+						{filter.label}
+					</button>
+				))}
+			</div>
+		) : null
+	}
+
+	<div class="projects-grid" id="projects-grid">
+		{projects.map((project) => (
+			<ProjectCard project={project} standIn={standIn} />
+		))}
+	</div>
+</section>
+
+{
+	!standIn ? (
+		<script>
+			const filterButtons = document.querySelectorAll<HTMLButtonElement>('[data-project-filter]');
+			const projectCards = document.querySelectorAll<HTMLElement>('[data-project-tags]');
+
+			filterButtons.forEach((button) => {
+				button.addEventListener('click', () => {
+					const filter = button.dataset.projectFilter ?? 'all';
+
+					filterButtons.forEach((btn) => btn.classList.remove('filter-btn--active'));
+					button.classList.add('filter-btn--active');
+
+					projectCards.forEach((card) => {
+						const tags = card.dataset.projectTags ?? '';
+						const match = filter === 'all' || tags.includes(filter);
+						card.hidden = !match;
+					});
+				});
+			});
+		</script>
+	) : null
+}

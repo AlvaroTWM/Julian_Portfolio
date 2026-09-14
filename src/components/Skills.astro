@@ -1,0 +1,25 @@
+---
+import { skillCategories, skillsSection } from '../data/skills.ts';
+---
+
+<section class="section section--skills" id="habilidades" aria-labelledby="skills-heading">
+	<header class="section-header">
+		<h2 class="section-title" id="skills-heading">{skillsSection.title}</h2>
+		<p class="section-subtitle">{skillsSection.subtitle}</p>
+	</header>
+
+	<div class="skills-grid">
+		{
+			skillCategories.map((category) => (
+				<div class="skills-card">
+					<h3 class="skills-card__title">{category.title}</h3>
+					<ul class="skills-card__list">
+						{category.items.map((item) => (
+							<li>{item}</li>
+						))}
+					</ul>
+				</div>
+			))
+		}
+	</div>
+</section>

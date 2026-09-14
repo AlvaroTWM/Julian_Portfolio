@@ -1,0 +1,34 @@
+---
+import { experienceGroups, experienceSection } from '../data/experience.ts';
+---
+
+<section class="section section--experience" id="experiencia" aria-labelledby="experience-heading">
+	<header class="section-header section-header--left">
+		<h2 class="section-title" id="experience-heading">{experienceSection.title}</h2>
+		<p class="section-subtitle section-subtitle--left">{experienceSection.subtitle}</p>
+	</header>
+
+	{
+		experienceGroups.map((group) => (
+			<div class="experience-group">
+				<h3 class="experience-group__title">{group.label}</h3>
+				<ul class="experience-list">
+					{group.items.map((item) => (
+						<li class="experience-card">
+							<div class="experience-card__meta">
+								<time class="experience-card__period" datetime={item.period}>
+									{item.period}
+								</time>
+							</div>
+							<div class="experience-card__body">
+								<h4 class="experience-card__title">{item.title}</h4>
+								<p class="experience-card__org">{item.organization}</p>
+								<p class="experience-card__desc">{item.description}</p>
+							</div>
+						</li>
+					))}
+				</ul>
+			</div>
+		))
+	}
+</section>
