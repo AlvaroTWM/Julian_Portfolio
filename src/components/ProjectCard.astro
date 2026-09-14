@@ -17,8 +17,23 @@ const tagsAttr = project.tags.join(' ');
 	]}
 	data-project-tags={tagsAttr}
 >
-	<div class="project-card__preview" aria-hidden="true">
-		<span class="project-card__placeholder-label">{project.title}</span>
+	<div class="project-card__preview">
+		{
+			project.image ? (
+				<img
+					class="project-card__image"
+					src={project.image}
+					alt={`Vista previa de ${project.title}`}
+					loading="lazy"
+					width="800"
+					height="500"
+				/>
+			) : (
+				<span class="project-card__placeholder-label" aria-hidden="true">
+					{project.title}
+				</span>
+			)
+		}
 	</div>
 	{
 		standIn && project.href ? (

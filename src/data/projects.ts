@@ -15,6 +15,7 @@ export type Project = {
 	technologies: string[];
 	impact: string;
 	href?: string;
+	image?: string;
 	featured?: boolean;
 };
 
@@ -35,6 +36,7 @@ export const projects: Project[] = [
 		impact: 'Productivo',
 		featured: true,
 		href: 'https://backoffice-portafolio.vercel.app/',
+		image: '/projects/loyalty-hub.jpg',
 	},
 	{
 		id: 'stand-in-2',
