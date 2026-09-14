@@ -12,14 +12,14 @@ export const experienceSection = {
 
 export const workExperience: TimelineItem[] = [
 	{
-		period: '2025-09 — Presente',
+		period: '2025-04 — Presente',
 		title: 'JR. BI Analyst',
 		organization: 'ITTI DIGITAL',
 		description:
 			'Desarrollo de soluciones para el departamento de loyalty utilizando metodologías ágiles: aplicaciones web y dashboards.',
 	},
 	{
-		period: '2024-05 — 2025-09',
+		period: '2024-04 — 2025-04',
 		title: 'Help desk and Automation Analyst',
 		organization: 'ITTI DIGITAL',
 		description:
