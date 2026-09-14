@@ -29,11 +29,12 @@ export const projects: Project[] = [
 	{
 		id: 'stand-in-1',
 		tags: ['Full Stack'],
-		title: 'Proyecto web 1',
-		problem: 'Pendiente',
-		technologies: ['—'],
-		impact: 'Pendiente',
+		title: 'Loyalty BI Backoffice',
+		problem: 'En producción, este proyecto permite a los clientes de un programa de fidelización gestionar sus campañas y analizar su performance.',
+		technologies: ['React', 'TypeScript', 'Node.js', 'TailwindCSS', 'Nullplatform', 'Amazon Aurora', 'Amazon Athena', 'Amazon S3'],
+		impact: 'Productivo',
 		featured: true,
+		href: 'https://backoffice-portafolio.vercel.app/',
 	},
 	{
 		id: 'stand-in-2',
