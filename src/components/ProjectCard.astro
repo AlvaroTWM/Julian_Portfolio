@@ -34,6 +34,35 @@ const tagsAttr = project.tags.join(' ');
 				</span>
 			)
 		}
+		{
+			project.profileImage ? (
+				<img
+					class="project-card__profile"
+					src={project.profileImage}
+					alt={`Identidad visual de ${project.title}`}
+					loading="lazy"
+					width="320"
+					height="320"
+				/>
+			) : null
+		}
+		{
+			project.icon ? (
+				<img
+					class:list={[
+						'project-card__icon',
+						{ 'project-card__icon--gif': project.icon.endsWith('.gif') },
+					]}
+					src={project.icon}
+					alt=""
+					width="64"
+					height="64"
+					loading="lazy"
+					decoding="async"
+					aria-hidden="true"
+				/>
+			) : null
+		}
 	</div>
 	{
 		standIn && project.href ? (

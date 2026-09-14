@@ -608,6 +608,58 @@ body {
 	align-items: center;
 	justify-content: center;
 	overflow: hidden;
+	position: relative;
+}
+
+.project-card__preview:has(.project-card__profile) .project-card__image {
+	opacity: 0.35;
+	filter: saturate(0.85) blur(1px);
+}
+
+.project-card__profile {
+	position: absolute;
+	inset: 0;
+	margin: auto;
+	width: min(72%, 14rem);
+	height: auto;
+	max-height: 78%;
+	object-fit: contain;
+	pointer-events: none;
+	filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.35));
+	z-index: 1;
+}
+
+.project-card__icon {
+	position: absolute;
+	right: 1rem;
+	bottom: 1rem;
+	width: 3.75rem;
+	height: 3.75rem;
+	object-fit: contain;
+	pointer-events: none;
+	filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.45));
+	animation: project-icon-float 2.4s ease-in-out infinite;
+	z-index: 2;
+}
+
+@keyframes project-icon-float {
+	0%,
+	100% {
+		transform: translateY(0) scale(1);
+	}
+	50% {
+		transform: translateY(-6px) scale(1.04);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.project-card__icon {
+		animation: none;
+	}
+}
+
+.project-card__icon--gif {
+	animation: none;
 }
 
 .project-card__image {
