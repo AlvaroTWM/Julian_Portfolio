@@ -12,18 +12,18 @@ export const experienceSection = {
 
 export const workExperience: TimelineItem[] = [
 	{
-		period: '2025-04 — Presente',
-		title: 'JR. BI Analyst',
-		organization: 'ITTI DIGITAL',
+		period: '2025-03 — Presente',
+		title: 'BI Analyst',
+		organization: 'ITTI S.A.E.',
 		description:
-			'Desarrollo de soluciones para el departamento de loyalty utilizando metodologías ágiles: aplicaciones web y dashboards.',
+			'Diseño e implemento soluciones de BI para banca y atención al cliente: dashboards ejecutivos en QuickSight para KPIs, reclamos y métricas operativas. Automaticé la generación y distribución de reportes con SQL, JavaScript y n8n, llevando un proceso manual de 1 mes a un solo clic. Construyo herramientas internas en React que integran APIs y múltiples fuentes de datos, con Git para el control de versiones.',
 	},
 	{
-		period: '2024-04 — 2025-04',
-		title: 'Help desk and Automation Analyst',
-		organization: 'ITTI DIGITAL',
+		period: '2024-04 — 2025-03',
+		title: 'Help Desk',
+		organization: 'ITTI S.A.E.',
 		description:
-			'Automatización de procesos internos y externos con N8N, chatbots y Active Directory para optimizar tiempos y soporte.',
+			'Soporte técnico de segundo nivel para aplicaciones y servicios del negocio. Documentación de servicios técnicos y trabajo con equipos de infraestructura en la resolución de problemas complejos. Automatización de procesos con n8n.',
 	},
 	{
 		period: '2023-04 — 2024-04',
@@ -37,7 +37,7 @@ export const workExperience: TimelineItem[] = [
 export const education: TimelineItem[] = [
 	{
 		period: '2025 — En curso',
-		title: 'Licenciatura en análisis de sistemas',
+		title: 'Licenciatura en Análisis de Sistemas',
 		organization: 'Universidad Americana',
 		description:
 			'Diseño y optimización de sistemas de información mediante relevamiento y análisis de procesos organizacionales.',
@@ -57,6 +57,12 @@ export const certifications: TimelineItem[] = [
 		title: 'PL-300 Microsoft Power BI Data Analyst',
 		organization: 'Microsoft',
 		description: 'Certificación oficial de analista de datos con Power BI.',
+	},
+	{
+		period: 'Certificación',
+		title: 'Oracle APEX y SQL',
+		organization: 'Oracle',
+		description: 'Desarrollo de aplicaciones low-code sobre Oracle Database y consultas SQL.',
 	},
 ];
 

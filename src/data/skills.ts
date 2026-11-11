@@ -6,14 +6,14 @@ export const skillsSection = {
 export const skillCategories = [
 	{
 		title: 'Frontend & Backend',
-		items: ['React', 'TypeScript', 'Node.js', 'Astro', 'TailwindCSS',],
+		items: ['React', 'JavaScript', 'TypeScript', 'Node.js', 'Astro', 'TailwindCSS'],
 	},
 	{
 		title: 'Data & Bases de Datos',
-		items: ['Power BI', 'PL/SQL', 'Amazon Athena', 'Amazon Aurora', 'Amazon Quicksight'],
+		items: ['SQL', 'PL/SQL', 'Power BI', 'Amazon QuickSight', 'Amazon Athena', 'Amazon Aurora'],
 	},
 	{
 		title: 'DevOps & Herramientas',
-		items: ['Docker', 'Git', 'Cursor', 'N8N', 'Postman',],
+		items: ['n8n', 'Git', 'Docker', 'Oracle APEX', 'Cursor', 'Postman'],
 	},
 ] as const;

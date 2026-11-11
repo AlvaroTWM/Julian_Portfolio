@@ -7,7 +7,7 @@ interface Props {
 }
 
 const { title = 'Portfolio' } = Astro.props;
-const description = 'Julian Arambulo, Fullstack Dev / BI analyst en Asunción. Proyectos web, dashboards y datos.';
+const description = 'Julian Arambulo, BI Analyst & Full Stack Developer en Asunción. Dashboards, automatización y aplicaciones web.';
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL('/og.jpg', Astro.site);
 ---
@@ -30,7 +30,7 @@ const ogImage = new URL('/og.jpg', Astro.site);
 		<meta property="og:image" content={ogImage} />
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
-		<meta property="og:image:alt" content="Julian Arambulo, Fullstack Dev / BI analyst" />
+		<meta property="og:image:alt" content="Julian Arambulo, BI Analyst & Full Stack Developer" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
