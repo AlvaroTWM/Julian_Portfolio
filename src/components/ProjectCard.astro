@@ -7,7 +7,7 @@ interface Props {
 }
 
 const { project, standIn = false } = Astro.props;
-const tagsAttr = project.tags.join(' ');
+const tagsAttr = project.tags.join(',');
 ---
 
 <article
@@ -108,19 +108,38 @@ const tagsAttr = project.tags.join(' ');
 						<dd>{project.impact}</dd>
 					</div>
 				</dl>
-				{project.href ? (
-					<a class="project-card__link" href={project.href}>
-						Ver proyecto
-						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-							<path
-								d="M7 17L17 7M17 7H9M17 7v8"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							/>
-						</svg>
-					</a>
+				{project.href || project.repoUrl ? (
+					<div class="project-card__actions">
+						{project.href ? (
+							<a
+								class="project-card__link project-card__link--primary"
+								href={project.href}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								Ver en vivo
+								<svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+									<path
+										d="M7 17L17 7M17 7H9M17 7v8"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
+								</svg>
+							</a>
+						) : null}
+						{project.repoUrl ? (
+							<a
+								class="project-card__link"
+								href={project.repoUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								Código
+							</a>
+						) : null}
+					</div>
 				) : null}
 			</div>
 		)

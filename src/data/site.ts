@@ -7,7 +7,7 @@ export const site = {
 	linkedinUrl: 'https://www.linkedin.com/in/alvaro-arambulo',
 	email: 'mailto:alvaroarambulo@gmail.com',
 	emailDisplay: 'alvaroarambulo@gmail.com',
-	cvUrl: '../public/Julian_Arambulo_CV .pdf',
+	cvUrl: '/julian-arambulo-cv.pdf',
 	title: 'Julian Arambulo — Fullstack Dev / BI analyst',
 };
 
@@ -23,7 +23,7 @@ export const about = {
 
 export const heroCta = {
 	primary: { label: 'Sobre mí', href: '#sobre-mi' },
-	secondary: { label: 'Descargar CV', href: '/cv.pdf' },
+	secondary: { label: 'Descargar CV', href: '/julian-arambulo-cv.pdf' },
 };
 
 export const contact = {
