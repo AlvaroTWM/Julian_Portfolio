@@ -49,7 +49,7 @@ import { heroCta, site, technologies } from '../data/site.ts';
 				{
 					technologies.map((tech) => (
 						<li class="stack-item" data-label={tech.name} tabindex="0">
-							<img src={tech.icon} alt={tech.name} width="28" height="28" loading="lazy" />
+							<img src={tech.icon} alt={tech.name} width="28" height="28" decoding="async" />
 						</li>
 					))
 				}

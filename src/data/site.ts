@@ -33,17 +33,14 @@ export const contact = {
 };
 
 export const technologies = [
-	{ name: 'React', icon: 'https://cdn.simpleicons.org/react/61DAFB' },
-	{ name: 'Power BI', icon: 'https://upload.wikimedia.org/wikipedia/commons/c/cf/New_Power_BI_Logo.svg' },
-	{ name: 'TypeScript', icon: 'https://cdn.simpleicons.org/typescript/3178C6' },
-	{ name: 'Cursor', icon: 'https://cdn.simpleicons.org/cursor/FFFFFF' },
-	{ name: 'Docker', icon: 'https://cdn.simpleicons.org/docker/2496ED' },
-	{ name: 'Node.js', icon: 'https://cdn.simpleicons.org/nodedotjs/339933' },
-	{
-		name: 'Athena',
-		icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg',
-	},
-	{ name: 'Astro', icon: 'https://cdn.simpleicons.org/astro/FFFFFF' },
-	{ name: 'TailwindCSS', icon: 'https://cdn.simpleicons.org/tailwindcss/06B6D4' },
-	{ name: 'N8N', icon: 'https://cdn.simpleicons.org/n8n/FFFFFF' },
+	{ name: 'React', icon: '/icons/stack/react.svg' },
+	{ name: 'Power BI', icon: '/icons/stack/powerbi.svg' },
+	{ name: 'TypeScript', icon: '/icons/stack/typescript.svg' },
+	{ name: 'Cursor', icon: '/icons/stack/cursor.svg' },
+	{ name: 'Docker', icon: '/icons/stack/docker.svg' },
+	{ name: 'Node.js', icon: '/icons/stack/nodedotjs.svg' },
+	{ name: 'Athena', icon: '/icons/stack/aws.svg' },
+	{ name: 'Astro', icon: '/icons/stack/astro.svg' },
+	{ name: 'TailwindCSS', icon: '/icons/stack/tailwindcss.svg' },
+	{ name: 'N8N', icon: '/icons/stack/n8n.svg' },
 ] as const;
