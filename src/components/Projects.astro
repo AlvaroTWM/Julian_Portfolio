@@ -27,6 +27,7 @@ const { standIn } = projectsSection;
 						type="button"
 						class:list={['filter-btn', { 'filter-btn--active': index === 0 }]}
 						data-project-filter={filter.id}
+						aria-pressed={index === 0 ? 'true' : 'false'}
 					>
 						{filter.label}
 					</button>
@@ -47,17 +48,23 @@ const { standIn } = projectsSection;
 		<script>
 			const filterButtons = document.querySelectorAll<HTMLButtonElement>('[data-project-filter]');
 			const projectCards = document.querySelectorAll<HTMLElement>('[data-project-tags]');
+			const projectsGrid = document.getElementById('projects-grid');
 
 			filterButtons.forEach((button) => {
 				button.addEventListener('click', () => {
 					const filter = button.dataset.projectFilter ?? 'all';
 
-					filterButtons.forEach((btn) => btn.classList.remove('filter-btn--active'));
+					filterButtons.forEach((btn) => {
+						btn.classList.remove('filter-btn--active');
+						btn.setAttribute('aria-pressed', 'false');
+					});
+					button.setAttribute('aria-pressed', 'true');
 					button.classList.add('filter-btn--active');
+					projectsGrid?.classList.toggle('projects-grid--filtered', filter !== 'all');
 
 					projectCards.forEach((card) => {
 						const tags = card.dataset.projectTags ?? '';
-						const match = filter === 'all' || tags.includes(filter);
+						const match = filter === 'all' || tags.split(',').includes(filter);
 						card.hidden = !match;
 					});
 				});
