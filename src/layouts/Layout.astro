@@ -7,6 +7,9 @@ interface Props {
 }
 
 const { title = 'Portfolio' } = Astro.props;
+const description = 'Julian Arambulo, Fullstack Dev / BI analyst en Asunción. Proyectos web, dashboards y datos.';
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL('/og.jpg', Astro.site);
 ---
 
 <!doctype html>
@@ -17,7 +20,21 @@ const { title = 'Portfolio' } = Astro.props;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content="Portafolio personal — Fullstack Dev / BI analyst" />
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonical} />
+		<meta property="og:type" content="website" />
+		<meta property="og:locale" content="es_PY" />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content="Julian Arambulo, Fullstack Dev / BI analyst" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImage} />
 		<meta name="color-scheme" content="dark" />
 		<meta name="theme-color" content="#000000" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -31,5 +48,46 @@ const { title = 'Portfolio' } = Astro.props;
 	<body>
 		<VantaBackground />
 		<slot />
+		<script>
+			const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+			// Aparición de secciones al hacer scroll
+			const revealTargets = document.querySelectorAll<HTMLElement>(
+				'.section-header, .about-text, .about-highlights, .project-card, .experience-group, .skills-card, .contact-link',
+			);
+			if (!reduceMotion && 'IntersectionObserver' in window) {
+				document.documentElement.classList.add('js-reveal');
+				const observer = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							if (!entry.isIntersecting) return;
+							entry.target.classList.add('is-visible');
+							observer.unobserve(entry.target);
+						});
+					},
+					{ rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+				);
+				revealTargets.forEach((el) => {
+					const siblings = Array.from(el.parentElement?.children ?? []);
+					const index = Math.max(0, siblings.indexOf(el));
+					el.style.setProperty('--reveal-delay', `${Math.min(index, 5) * 70}ms`);
+					observer.observe(el);
+				});
+			}
+
+			// Brillo que sigue al cursor en las tarjetas
+			if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+				document
+					.querySelectorAll<HTMLElement>('.project-card, .skills-card, .experience-card, .contact-link')
+					.forEach((card) => {
+						card.classList.add('spotlight');
+						card.addEventListener('pointermove', (event) => {
+							const rect = card.getBoundingClientRect();
+							card.style.setProperty('--spot-x', `${event.clientX - rect.left}px`);
+							card.style.setProperty('--spot-y', `${event.clientY - rect.top}px`);
+						});
+					});
+			}
+		</script>
 	</body>
 </html>

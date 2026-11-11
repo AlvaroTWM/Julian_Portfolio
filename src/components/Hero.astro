@@ -5,7 +5,7 @@ import { heroCta, site, technologies } from '../data/site.ts';
 <div class="page">
 	<header class="top-bar">
 		<a class="github-btn" href={site.githubUrl} target="_blank" rel="noopener noreferrer">
-			Get my github
+			Mi GitHub
 			<svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
 				<path
 					d="M7 17L17 7M17 7H9M17 7v8"
@@ -29,10 +29,10 @@ import { heroCta, site, technologies } from '../data/site.ts';
 						stroke-linejoin="round"></path>
 					<circle cx="12" cy="11" r="2.5" stroke="currentColor" stroke-width="1.5"></circle>
 				</svg>
-				Based in {site.location}
+				Desde {site.location}
 			</p>
 
-			<p class="greeting">Hi, I'm {site.name},</p>
+			<p class="greeting">Hola, soy {site.name},</p>
 			<h1 class="headline">{site.roles}</h1>
 			<p class="tagline">{site.tagline}</p>
 
@@ -41,13 +41,14 @@ import { heroCta, site, technologies } from '../data/site.ts';
 				<a class="btn btn--secondary" href={heroCta.secondary.href} download>
 					{heroCta.secondary.label}
 				</a>
+				<a class="btn btn--secondary" href="#proyectos">Ver proyectos</a>
 				<a class="btn btn--ghost" href="#contacto">Contacto</a>
 			</div>
 
 			<ul class="stack">
 				{
 					technologies.map((tech) => (
-						<li class="stack-item">
+						<li class="stack-item" data-label={tech.name} tabindex="0">
 							<img src={tech.icon} alt={tech.name} width="28" height="28" loading="lazy" />
 						</li>
 					))

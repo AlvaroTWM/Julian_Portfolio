@@ -936,3 +936,223 @@ body {
 .project-card[hidden] {
 	display: none;
 }
+
+/* ---------- Hover y movimiento en todo el sitio ---------- */
+
+/* Botones del inicio */
+.btn,
+.github-btn {
+	transition:
+		background 0.2s ease,
+		border-color 0.2s ease,
+		color 0.2s ease,
+		transform 0.2s ease,
+		box-shadow 0.2s ease;
+}
+
+.github-btn svg {
+	transition: transform 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.btn:hover,
+	.github-btn:hover {
+		transform: translateY(-1px);
+	}
+
+	.btn--primary:hover,
+	.github-btn:hover {
+		box-shadow: 0 10px 28px -10px rgba(124, 108, 255, 0.7);
+	}
+
+	.github-btn:hover svg {
+		transform: translate(2px, -2px);
+	}
+}
+
+.btn:active,
+.github-btn:active {
+	transform: translateY(0) scale(0.98);
+}
+
+/* Íconos del stack con nombre al pasar */
+.stack-item {
+	position: relative;
+	cursor: default;
+	transition:
+		transform 0.2s ease,
+		background 0.2s ease,
+		border-color 0.2s ease;
+}
+
+.stack-item::after {
+	content: attr(data-label);
+	position: absolute;
+	left: 50%;
+	bottom: calc(100% + 0.5rem);
+	transform: translate(-50%, 4px);
+	padding: 0.3rem 0.55rem;
+	border-radius: 0.4rem;
+	font-size: 0.75rem;
+	font-weight: 500;
+	white-space: nowrap;
+	color: #fff;
+	background: rgba(20, 20, 24, 0.95);
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	opacity: 0;
+	pointer-events: none;
+	transition:
+		opacity 0.15s ease,
+		transform 0.15s ease;
+}
+
+.stack-item:hover,
+.stack-item:focus-visible {
+	transform: translateY(-3px);
+	background: #1d1d22;
+	border-color: rgba(124, 108, 255, 0.4);
+	outline: none;
+}
+
+.stack-item:hover::after,
+.stack-item:focus-visible::after {
+	opacity: 1;
+	transform: translate(-50%, 0);
+}
+
+/* Brillo que sigue al cursor */
+.spotlight {
+	position: relative;
+	isolation: isolate;
+}
+
+.spotlight::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	background: radial-gradient(
+		22rem circle at var(--spot-x, 50%) var(--spot-y, 50%),
+		rgba(124, 108, 255, 0.14),
+		transparent 60%
+	);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.3s ease;
+	z-index: 2;
+}
+
+.spotlight:hover::before {
+	opacity: 1;
+}
+
+.skills-card,
+.experience-card {
+	transition:
+		border-color 0.3s ease,
+		transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.skills-card:hover,
+	.experience-card:hover {
+		border-color: rgba(124, 108, 255, 0.35);
+	}
+
+	.skills-card:hover {
+		transform: translateY(-3px);
+	}
+}
+
+/* Flecha en los links de contacto */
+.contact-link__label {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+}
+
+.contact-link__label::after {
+	content: '↗';
+	font-size: 0.95rem;
+	color: #b8adff;
+	opacity: 0;
+	transform: translateX(-6px);
+	transition:
+		opacity 0.2s ease,
+		transform 0.2s ease;
+}
+
+.contact-link:hover .contact-link__label::after,
+.contact-link:focus-visible .contact-link__label::after {
+	opacity: 1;
+	transform: translateX(0);
+}
+
+/* Aparición al hacer scroll (solo si hay JS y movimiento permitido) */
+.js-reveal .section-header,
+.js-reveal .about-text,
+.js-reveal .about-highlights,
+.js-reveal .project-card,
+.js-reveal .experience-group,
+.js-reveal .skills-card,
+.js-reveal .contact-link {
+	opacity: 0;
+	translate: 0 16px;
+	transition:
+		opacity 0.6s ease var(--reveal-delay, 0ms),
+		translate 0.6s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms),
+		transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+		border-color 0.35s ease,
+		box-shadow 0.35s ease,
+		background 0.2s ease;
+}
+
+.js-reveal .is-visible {
+	opacity: 1;
+	translate: 0 0;
+}
+
+/* Entrada del inicio */
+@keyframes hero-in {
+	from {
+		opacity: 0;
+		transform: translateY(14px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+.intro > * {
+	animation: hero-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.intro > :nth-child(2) { animation-delay: 60ms; }
+.intro > :nth-child(3) { animation-delay: 120ms; }
+.intro > :nth-child(4) { animation-delay: 180ms; }
+.intro > :nth-child(5) { animation-delay: 240ms; }
+.intro > :nth-child(6) { animation-delay: 300ms; }
+
+@media (prefers-reduced-motion: reduce) {
+	.intro > * {
+		animation: none;
+	}
+
+	.btn,
+	.github-btn,
+	.stack-item,
+	.skills-card,
+	.experience-card,
+	.spotlight::before,
+	.contact-link__label::after {
+		transition: none;
+	}
+
+	.btn:hover,
+	.github-btn:hover,
+	.stack-item:hover,
+	.skills-card:hover {
+		transform: none;
+	}
+}
