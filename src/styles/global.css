@@ -1156,3 +1156,32 @@ body {
 		transform: none;
 	}
 }
+
+.about-languages {
+	margin: 1.5rem 0 0;
+	font-size: 0.9375rem;
+	color: var(--text-muted);
+}
+
+.about-languages span {
+	margin-right: 0.5rem;
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: #b8adff;
+}
+
+.headline {
+	max-width: none;
+}
+
+.headline__line {
+	display: block;
+}
+
+@media (max-width: 480px) {
+	.headline {
+		font-size: clamp(2.6rem, 11vw, 3.5rem);
+	}
+}

@@ -1,24 +1,25 @@
 export const site = {
 	name: 'Julian Arambulo',
 	location: 'Asunción',
-	roles: 'Fullstack Dev / BI analyst',
+	roles: 'BI Analyst & Full Stack Dev',
 	tagline: 'Transforma ideas en código y datos en valor.',
 	githubUrl: 'https://github.com/AlvaroTWM',
 	linkedinUrl: 'https://www.linkedin.com/in/alvaro-arambulo',
 	email: 'mailto:alvaroarambulo@gmail.com',
 	emailDisplay: 'alvaroarambulo@gmail.com',
 	cvUrl: '/julian-arambulo-cv.pdf',
-	title: 'Julian Arambulo — Fullstack Dev / BI analyst',
+	title: 'Julian Arambulo — BI Analyst & Full Stack Developer',
 };
 
 export const about = {
 	title: 'Sobre mí',
-	body: `Desarrollo aplicaciones web y analizo datos para que los equipos decidan con información clara, no con suposiciones.`,
+	body: `BI Analyst & Developer con 3 años de experiencia en los sectores bancario y retail. Me especializo en soluciones de inteligencia de negocio, automatización de procesos y aplicaciones orientadas al negocio, para que los equipos decidan con información clara y no con suposiciones.`,
 	highlights: [
-		'Productos web simples de mantener y escalar.',
-		'Dashboards y reportes útiles para negocio.',
-		'Traduzco necesidades del cliente en soluciones técnicas concretas.',
+		'Dashboards ejecutivos en QuickSight y Power BI para KPIs, reclamos y métricas operativas.',
+		'Automatizaciones con SQL, JavaScript y n8n: un proceso manual de 1 mes pasó a un solo clic.',
+		'Herramientas internas en React que integran APIs y múltiples fuentes de datos.',
 	],
+	languages: 'Español nativo · Portugués C1 · Inglés B1',
 };
 
 export const heroCta = {
@@ -33,17 +34,15 @@ export const contact = {
 };
 
 export const technologies = [
-	{ name: 'React', icon: 'https://cdn.simpleicons.org/react/61DAFB' },
-	{ name: 'Power BI', icon: 'https://upload.wikimedia.org/wikipedia/commons/c/cf/New_Power_BI_Logo.svg' },
-	{ name: 'TypeScript', icon: 'https://cdn.simpleicons.org/typescript/3178C6' },
-	{ name: 'Cursor', icon: 'https://cdn.simpleicons.org/cursor/FFFFFF' },
-	{ name: 'Docker', icon: 'https://cdn.simpleicons.org/docker/2496ED' },
-	{ name: 'Node.js', icon: 'https://cdn.simpleicons.org/nodedotjs/339933' },
-	{
-		name: 'Athena',
-		icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg',
-	},
-	{ name: 'Astro', icon: 'https://cdn.simpleicons.org/astro/FFFFFF' },
-	{ name: 'TailwindCSS', icon: 'https://cdn.simpleicons.org/tailwindcss/06B6D4' },
-	{ name: 'N8N', icon: 'https://cdn.simpleicons.org/n8n/FFFFFF' },
+	{ name: 'React', icon: '/icons/stack/react.svg' },
+	{ name: 'JavaScript', icon: '/icons/stack/javascript.svg' },
+	{ name: 'Power BI', icon: '/icons/stack/powerbi.svg' },
+	{ name: 'TypeScript', icon: '/icons/stack/typescript.svg' },
+	{ name: 'Docker', icon: '/icons/stack/docker.svg' },
+	{ name: 'Node.js', icon: '/icons/stack/nodedotjs.svg' },
+	{ name: 'Athena', icon: '/icons/stack/aws.svg' },
+	{ name: 'Astro', icon: '/icons/stack/astro.svg' },
+	{ name: 'TailwindCSS', icon: '/icons/stack/tailwindcss.svg' },
+	{ name: 'N8N', icon: '/icons/stack/n8n.svg' },
+	{ name: 'Git', icon: '/icons/stack/git.svg' },
 ] as const;

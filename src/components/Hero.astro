@@ -33,7 +33,11 @@ import { heroCta, site, technologies } from '../data/site.ts';
 			</p>
 
 			<p class="greeting">Hola, soy {site.name},</p>
-			<h1 class="headline">{site.roles}</h1>
+			<h1 class="headline">
+				{site.roles.split(' & ').map((line, i, all) => (
+					<span class="headline__line">{i < all.length - 1 ? `${line} &` : line}</span>
+				))}
+			</h1>
 			<p class="tagline">{site.tagline}</p>
 
 			<div class="hero-cta">
@@ -49,7 +53,7 @@ import { heroCta, site, technologies } from '../data/site.ts';
 				{
 					technologies.map((tech) => (
 						<li class="stack-item" data-label={tech.name} tabindex="0">
-							<img src={tech.icon} alt={tech.name} width="28" height="28" loading="lazy" />
+							<img src={tech.icon} alt={tech.name} width="28" height="28" decoding="async" />
 						</li>
 					))
 				}
