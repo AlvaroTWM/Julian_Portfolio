@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Intro from '../components/Intro.astro';
 import VantaBackground from '../components/VantaBackground.astro';
 
 interface Props {
@@ -49,6 +50,7 @@ const ogImage = new URL('/og.jpg', Astro.site);
 		<title>{title}</title>
 	</head>
 	<body>
+		<Intro />
 		<VantaBackground />
 		<slot />
 		<script>

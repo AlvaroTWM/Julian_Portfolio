@@ -1,0 +1,122 @@
+---
+// Pantalla de entrada GoodFellas Corp: la calavera se dibuja de un trazo, el moño rojo hace pop,
+// se enciende la brasa y el humo viaja hasta convertirse en "GoodFellas".
+// Se muestra una vez por sesión; se salta con clic, toque o cualquier tecla.
+// Sin JavaScript o con "reducir movimiento" no aparece y la página se ve directo.
+import introRaw from '../assets/brand/goodfellas-intro.svg?raw';
+
+const intro = introRaw.replace('<svg ', '<svg class="gf-intro-art" role="img" aria-label="Creado por GoodFellas Corp" ');
+---
+
+<div class="gf-intro" id="gf-intro" aria-hidden="true">
+	<Fragment set:html={intro} />
+	<span class="gf-intro-skip">Tocá para saltar</span>
+</div>
+
+<script is:inline>
+	(function () {
+		try {
+			var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			if (reduce || sessionStorage.getItem('gf-intro')) return;
+			// En pantallas verticales el texto va debajo de la calavera
+			if (window.innerWidth < window.innerHeight) {
+				var svg = document.querySelector('.gf-intro-art');
+				var texto = document.getElementById('gf-texto');
+				if (svg && texto) {
+					svg.classList.add('gf-v');
+					svg.setAttribute('viewBox', svg.getAttribute('data-vb-v'));
+					texto.setAttribute('transform', texto.getAttribute('data-t-v'));
+				}
+			}
+			document.documentElement.classList.add('gf-intro-on');
+		} catch (e) {}
+	})();
+</script>
+
+<script>
+	const root = document.documentElement;
+	const intro = document.getElementById('gf-intro');
+	const DURATION = 5800; // trazo + pop + humo que escribe el nombre
+
+	if (intro && root.classList.contains('gf-intro-on')) {
+		let done = false;
+		const close = () => {
+			if (done) return;
+			done = true;
+			try {
+				sessionStorage.setItem('gf-intro', '1');
+			} catch {}
+			intro.classList.add('gf-intro-out');
+			window.setTimeout(() => {
+				root.classList.remove('gf-intro-on');
+				intro.remove();
+			}, 800);
+		};
+		const timer = window.setTimeout(close, DURATION);
+		const skip = () => {
+			window.clearTimeout(timer);
+			close();
+		};
+		intro.addEventListener('click', skip);
+		window.addEventListener('keydown', skip, { once: true });
+	} else {
+		intro?.remove();
+	}
+</script>
+
+<style is:global>
+	.gf-intro {
+		display: none;
+	}
+
+	html.gf-intro-on {
+		overflow: hidden;
+	}
+
+	html.gf-intro-on .gf-intro {
+		position: fixed;
+		inset: 0;
+		z-index: 1000;
+		display: grid;
+		place-items: center;
+		background: #000;
+		cursor: pointer;
+		transition: opacity 0.8s ease;
+	}
+
+	.gf-intro.gf-intro-out {
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	.gf-intro-art {
+		width: min(88vw, 1100px);
+		max-height: 80vh;
+		height: auto;
+		overflow: visible;
+	}
+
+	.gf-intro-art.gf-v {
+		width: min(92vw, 520px);
+	}
+
+	.gf-intro-skip {
+		position: absolute;
+		bottom: 24px;
+		left: 50%;
+		transform: translateX(-50%);
+		font-family: 'Inter', system-ui, sans-serif;
+		font-size: 0.7rem;
+		letter-spacing: 0.25em;
+		text-transform: uppercase;
+		color: rgba(255, 255, 255, 0.35);
+		opacity: 0;
+		animation: gf-intro-fade 1s ease 1.5s forwards;
+	}
+
+	@keyframes gf-intro-fade {
+		to {
+			opacity: 1;
+		}
+	}
+</style>
