@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="150 140 700 600">
+  <title>GoodFellas Corp</title>
+  <g id="calavera" fill="none" stroke="#F4F1EA" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <!-- contorno: sienes, pómulos y mandíbula en un solo trazo -->
+    <path d="M386 318 C380 350 380 388 386 414 C368 424 364 456 380 472 C390 480 396 490 398 504
+             C402 540 424 566 452 572 C466 575 494 575 508 572 C536 566 558 540 562 504
+             C564 490 570 480 580 472 C596 456 592 424 574 414 C580 388 580 350 574 318"/>
+    <!-- ojos con ceño -->
+    <path d="M402 390 L468 404 C468 424 454 436 434 436 C412 436 400 418 402 390 Z"/>
+    <path d="M558 390 L492 404 C492 424 506 436 526 436 C548 436 560 418 558 390 Z"/>
+    <path d="M398 376 C424 374 452 382 472 394 M562 376 C536 374 508 382 488 394" stroke-width="2.6"/>
+    <path d="M394 450 C404 460 412 472 416 486 M566 450 C556 460 548 472 544 486" stroke-width="2.6"/>
+    <path d="M396 344 L410 352 L406 364" stroke-width="2.2"/>
+    <circle cx="444" cy="418" r="3.5" fill="#F4F1EA" stroke="none"/>
+    <circle cx="516" cy="418" r="3.5" fill="#F4F1EA" stroke="none"/>
+    <!-- nariz -->
+    <path d="M480 446 C474 458 468 468 472 474 C476 477 480 472 480 468 C480 472 484 477 488 474 C492 468 486 458 480 446 Z" stroke-width="2.6"/>
+    <!-- dientes -->
+    <path d="M424 500 C456 510 504 510 536 500" stroke-width="2.6"/>
+    <path d="M432 524 C460 533 500 533 528 524" stroke-width="2.6"/>
+    <g stroke-width="2.2">
+      <path d="M440 504 L442 526"/><path d="M456 507 L457 529"/><path d="M472 508 L472 531"/>
+      <path d="M488 508 L488 531"/><path d="M504 507 L503 529"/><path d="M520 504 L518 526"/>
+    </g>
+    <!-- sonrisa ladeada -->
+    <path d="M538 498 C548 494 556 486 560 476" stroke-width="2.6"/>
+  </g>
+  <g id="sombrero" stroke="#F4F1EA" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" transform="rotate(-6 480 300)">
+    <ellipse cx="480" cy="318" rx="196" ry="40" fill="#000"/>
+    <path d="M396 318 C390 250 426 202 480 202 C534 202 570 250 564 318 C536 330 424 330 396 318 Z" fill="#000"/>
+    <path d="M398 288 C434 300 526 300 562 288" fill="none"/>
+    <g fill="none" stroke-width="3">
+      <path d="M416 250 C450 258 510 258 544 250" stroke-dasharray="10 9"/>
+      <path d="M318 330 C350 344 410 352 440 354"/>
+      <path d="M642 330 C610 344 550 352 520 354"/>
+    </g>
+    <g stroke-width="3">
+      <path d="M286 322 L272 330"/><path d="M296 336 L286 348"/><path d="M674 322 L690 328"/><path d="M664 338 L676 350"/>
+    </g>
+  </g>
+  <g id="cuerpo" fill="none" stroke="#F4F1EA" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M473 582 L473 592 M487 582 L487 592" stroke-width="4"/>
+    <path d="M426 606 C388 614 360 634 344 672"/>
+    <path d="M534 606 C572 614 600 634 616 672"/>
+    <path d="M426 606 L480 692 L534 606"/>
+  </g>
+  <g id="gf-mono">
+    <path d="M480 616 L436 594 C428 606 428 628 436 640 Z" fill="#D7262E"/>
+    <path d="M480 616 L524 594 C532 606 532 628 524 640 Z" fill="#D7262E"/>
+    <rect x="469" y="606" width="22" height="20" rx="6" fill="#D7262E" stroke="#000" stroke-width="3"/>
+  </g>
+  <g id="mano" fill="none" stroke="#F4F1EA" stroke-linecap="round" transform="translate(-16 34) translate(700 560) scale(1.18) translate(-700 -560)">
+    <!-- antebrazo -->
+    <path d="M687.7 537.0 L682.3 635.0" stroke-width="6"/>
+    <path d="M708.4 537.0 L715.6 631.0" stroke-width="6"/>
+    <!-- carpos -->
+    <circle cx="686" cy="522" r="5" fill="#F4F1EA" stroke="none"/>
+    <circle cx="700" cy="518" r="5" fill="#F4F1EA" stroke="none"/>
+    <circle cx="714" cy="524" r="5" fill="#F4F1EA" stroke="none"/>
+    <!-- metacarpos -->
+    <path d="M684.7 511.2 L673.3 466.8" stroke-width="6"/>
+    <path d="M697.5 507.0 L692.5 461.0" stroke-width="6"/>
+    <path d="M708.2 509.0 L709.8 465.0" stroke-width="6"/>
+    <path d="M719.0 515.1 L727.0 474.9" stroke-width="6"/>
+    <!-- pucho (detrás de los dedos) -->
+    <g id="pucho">
+      <path d="M640 404 L770 372" stroke="#F4F1EA" stroke-width="11"/>
+      <path d="M640 404 L770 372" stroke="#000" stroke-width="6.5"/>
+      <path d="M758 375 L760 383 M748 377 L750 385" stroke="#F4F1EA" stroke-width="2.5"/>
+    </g>
+    <!-- dedos -->
+    <path d="M670.4 457.3 L661.6 430.7" stroke-width="6"/>
+<path d="M660.0 421.0 L660.0 405.0" stroke-width="6"/>
+<path d="M662.5 395.7 L665.5 390.3" stroke-width="6"/>
+    <path d="M691.7 451.0 L690.3 423.0" stroke-width="6"/>
+<path d="M690.8 413.1 L693.2 398.9" stroke-width="6"/>
+<path d="M697.2 390.2 L700.8 385.8" stroke-width="6"/>
+    <path d="M711.3 455.2 L716.7 434.8" stroke-width="5"/>
+<path d="M716.6 425.2 L713.4 414.8" stroke-width="5"/>
+<path d="M708.1 406.9 L705.9 405.1" stroke-width="5"/>
+    <path d="M729.9 465.4 L736.1 450.6" stroke-width="5"/>
+<path d="M736.4 441.3 L733.6 432.7" stroke-width="5"/>
+<path d="M727.7 425.4 L726.3 424.6" stroke-width="5"/>
+    <!-- pulgar -->
+    <path d="M680.6 506.3 L663.4 487.7" stroke-width="6"/>
+<path d="M658.0 479.4 L650.0 460.6" stroke-width="6"/>
+<path d="M648.5 451.0 L649.5 441.0" stroke-width="6"/>
+    <circle id="brasa" cx="775" cy="371" r="5.5" fill="#F4F1EA" stroke="none"/>
+  </g>
+</svg>
