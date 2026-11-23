@@ -1,18 +1,21 @@
 ---
-// Pantalla de entrada: "Made for GoodFellas Corp" con el logo animado sobre negro.
+// Pantalla de entrada: calavera animada a la izquierda y "Creado por GoodFellas Corp" a la derecha.
 // Se muestra una vez por sesión; se salta con clic, toque o cualquier tecla.
 // Sin JavaScript o con "reducir movimiento" no aparece y la página se ve directo.
-import logoRaw from '../assets/brand/goodfellas-corp-logo-animado.svg?raw';
+import calaveraRaw from '../assets/brand/goodfellas-calavera-animada.svg?raw';
+import wordmarkRaw from '../assets/brand/goodfellas-wordmark.svg?raw';
 
-const logo = logoRaw
-	.replace(/<\?xml[^>]*>\s*/, '')
-	.replace(' width="1000" height="1000"', ' class="gf-intro-logo" role="img" aria-label="GoodFellas Corp"');
+const calavera = calaveraRaw.replace('<svg ', '<svg class="gf-intro-logo" aria-hidden="true" ');
+const wordmark = wordmarkRaw.replace('<svg ', '<svg class="gf-intro-wordmark" role="img" aria-label="GoodFellas Corp" ');
 ---
 
 <div class="gf-intro" id="gf-intro" aria-hidden="true">
 	<div class="gf-intro-inner">
-		<p class="gf-intro-made">Made for</p>
-		<Fragment set:html={logo} />
+		<Fragment set:html={calavera} />
+		<div class="gf-intro-text">
+			<p class="gf-intro-made">Creado por</p>
+			<Fragment set:html={wordmark} />
+		</div>
 	</div>
 	<span class="gf-intro-skip">Tocá para saltar</span>
 </div>
@@ -86,29 +89,65 @@ const logo = logoRaw
 
 	.gf-intro-inner {
 		display: flex;
-		flex-direction: column;
 		align-items: center;
+		justify-content: center;
+		gap: clamp(24px, 4vw, 64px);
 		padding: 0 16px;
 	}
 
-	.gf-intro-made {
-		margin: 0 0 -1.5vmin;
-		font-family: 'Inter', system-ui, sans-serif;
-		font-weight: 300;
-		font-size: clamp(0.75rem, 1.6vmin, 1rem);
-		letter-spacing: 0.6em;
-		text-transform: uppercase;
-		color: rgba(244, 241, 234, 0.75);
-		opacity: 0;
-		animation: gf-intro-fade 1s ease 0.2s forwards;
-	}
-
 	.gf-intro-logo {
-		width: min(92vw, 72vh, 560px);
+		overflow: visible;
+		width: min(42vw, 62vh, 520px);
 		height: auto;
+		flex: none;
 		opacity: 0;
 		transform: scale(0.96);
 		animation: gf-intro-logo-in 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+	}
+
+	.gf-intro-text {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.gf-intro-made {
+		margin: 0 0 clamp(8px, 1.5vw, 16px);
+		font-family: 'Inter', system-ui, sans-serif;
+		font-weight: 300;
+		font-size: clamp(0.7rem, 1.1vw, 0.95rem);
+		letter-spacing: 0.5em;
+		text-transform: uppercase;
+		color: rgba(244, 241, 234, 0.75);
+		opacity: 0;
+		animation: gf-intro-fade 1s ease 0.5s forwards;
+	}
+
+	.gf-intro-wordmark {
+		width: min(36vw, 440px);
+		height: auto;
+		opacity: 0;
+		animation: gf-intro-fade 1.2s ease 0.9s forwards;
+	}
+
+	@media (max-width: 720px) {
+		.gf-intro-inner {
+			flex-direction: column;
+			gap: 20px;
+		}
+
+		.gf-intro-logo {
+		overflow: visible;
+			width: min(80vw, 46vh);
+		}
+
+		.gf-intro-text {
+			align-items: center;
+		}
+
+		.gf-intro-wordmark {
+			width: min(80vw, 360px);
+		}
 	}
 
 	.gf-intro-skip {
