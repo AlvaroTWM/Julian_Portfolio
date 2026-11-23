@@ -1,0 +1,242 @@
+---
+import Flow from './Flow.astro';
+import { caseStudies, otherProjects } from '../data/projects.ts';
+---
+
+<section id="work" class="section wrap" aria-labelledby="work-title">
+	<h2 id="work-title" class="section-title">
+		<span>Selected work</span>
+		<span>{caseStudies.length} case studies</span>
+	</h2>
+
+	<div class="cases">
+		{
+			caseStudies.map((study) => (
+				<article class="case" id={study.id} aria-labelledby={`${study.id}-title`}>
+					<p class="kind mono">
+						{study.kind}
+						<span aria-hidden="true"> · </span>
+						{study.year}
+						{study.status === 'in-progress' && <span class="badge">In progress</span>}
+					</p>
+					<h3 id={`${study.id}-title`}>{study.title}</h3>
+					<p class="summary">{study.summary}</p>
+
+					{study.image && (
+						<img
+							class="shot"
+							src={study.image.src}
+							alt={study.image.alt}
+							width={study.image.width}
+							height={study.image.height}
+							loading="lazy"
+							decoding="async"
+						/>
+					)}
+
+					<dl>
+						<div>
+							<dt>Problem</dt>
+							<dd>{study.problem}</dd>
+						</div>
+						<div>
+							<dt>What I built</dt>
+							<dd>
+								<ul>
+									{study.built.map((item) => (
+										<li>{item}</li>
+									))}
+								</ul>
+							</dd>
+						</div>
+						<div>
+							<dt>Result</dt>
+							<dd>{study.result}</dd>
+						</div>
+					</dl>
+
+					<Flow stages={study.flow} label={`${study.title} architecture`} />
+
+					<p class="stack mono">
+						<span class="visually-hidden">Stack: </span>
+						{study.stack.join(' · ')}
+					</p>
+
+					{study.links.length > 0 && (
+						<ul class="links inline-list">
+							{study.links.map((link) => (
+								<li>
+									<a class="arrow-link" href={link.href}>
+										{link.label}
+									</a>
+								</li>
+							))}
+						</ul>
+					)}
+					{study.note && <p class="note">{study.note}</p>}
+				</article>
+			))
+		}
+	</div>
+
+	<h3 class="other-title">Also built</h3>
+	<ul class="other">
+		{
+			otherProjects.map((project) => (
+				<li>
+					<div class="other-head">
+						<span class="other-name">{project.title}</span>
+						<span class="mono muted">{project.stack.join(' · ')}</span>
+					</div>
+					<p>{project.description}</p>
+					<ul class="inline-list">
+						{project.links.map((link) => (
+							<li>
+								<a class="arrow-link" href={link.href}>
+									{link.label}
+								</a>
+							</li>
+						))}
+					</ul>
+				</li>
+			))
+		}
+	</ul>
+</section>
+
+<style>
+	.cases {
+		display: grid;
+		gap: clamp(3.5rem, 9vw, 5rem);
+	}
+
+	.kind {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0 0.25rem;
+		color: var(--muted);
+		font-size: 0.8125rem;
+	}
+
+	.badge {
+		margin-left: 0.5rem;
+		padding: 0.05rem 0.45rem;
+		border: 1px solid currentColor;
+		border-radius: 999px;
+		color: var(--accent);
+		font-size: 0.6875rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+	}
+
+	h3 {
+		margin-top: 0.4rem;
+		font-size: clamp(1.4rem, 3vw, 1.65rem);
+	}
+
+	.summary {
+		margin-top: 0.5rem;
+		font-size: 1.125rem;
+		color: var(--muted);
+	}
+
+	.shot {
+		width: 100%;
+		margin-top: 1.5rem;
+		aspect-ratio: 16 / 9;
+		object-fit: cover;
+		object-position: top;
+		border: 1px solid var(--line);
+		border-radius: 6px;
+		background: var(--surface);
+	}
+
+	dl {
+		display: grid;
+		gap: 1.1rem;
+		margin-top: 1.75rem;
+	}
+
+	dl > div {
+		display: grid;
+		grid-template-columns: 8.5rem 1fr;
+		gap: 1rem;
+	}
+
+	dt {
+		font-weight: 500;
+	}
+
+	dd ul {
+		display: grid;
+		gap: 0.35rem;
+		padding-left: 1.1rem;
+	}
+
+	dd li::marker {
+		color: var(--muted);
+	}
+
+	.stack {
+		margin-top: 1.5rem;
+		color: var(--muted);
+		font-size: 0.8125rem;
+	}
+
+	.links {
+		margin-top: 1rem;
+	}
+
+	.note {
+		margin-top: 1rem;
+		font-size: 0.9375rem;
+		color: var(--muted);
+		font-style: italic;
+	}
+
+	.other-title {
+		margin-top: clamp(4rem, 10vw, 5.5rem);
+		padding-bottom: 0.75rem;
+		border-bottom: 1px solid var(--line);
+		font-size: 1rem;
+	}
+
+	.other {
+		padding: 0;
+		list-style: none;
+	}
+
+	.other > li {
+		padding: 1.25rem 0;
+		border-bottom: 1px solid var(--line);
+	}
+
+	.other-head {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 0.25rem 1rem;
+	}
+
+	.other-name {
+		font-weight: 500;
+	}
+
+	.other p {
+		margin: 0.35rem 0 0.6rem;
+		color: var(--muted);
+		font-size: 0.9375rem;
+	}
+
+	.other .inline-list {
+		font-size: 0.9375rem;
+	}
+
+	@media (max-width: 36rem) {
+		dl > div {
+			grid-template-columns: 1fr;
+			gap: 0.2rem;
+		}
+	}
+</style>

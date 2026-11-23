@@ -1,0 +1,112 @@
+---
+// Small architecture diagram: stages from left to right (top to bottom on phones).
+// Plain HTML instead of an image so it stays sharp, themeable and readable by screen readers.
+import type { FlowStage } from '../data/projects.ts';
+
+interface Props {
+	stages: FlowStage[];
+	label: string;
+}
+
+const { stages, label } = Astro.props;
+---
+
+<figure class="flow">
+	<figcaption class="mono">Architecture</figcaption>
+	<ol aria-label={label}>
+		{
+			stages.map((stage) => (
+				<li>
+					<span class="stage">{stage.label}</span>
+					{stage.items.map((item) => (
+						<span class="node">{item}</span>
+					))}
+				</li>
+			))
+		}
+	</ol>
+</figure>
+
+<style>
+	.flow {
+		margin-top: 1.75rem;
+	}
+
+	figcaption {
+		margin-bottom: 0.6rem;
+		color: var(--muted);
+		font-size: 0.75rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+	}
+
+	ol {
+		display: grid;
+		grid-auto-flow: column;
+		grid-auto-columns: 1fr;
+		gap: 1.75rem;
+		padding: 0;
+		list-style: none;
+		counter-reset: stage;
+	}
+
+	li {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+	}
+
+	li:not(:last-child)::after {
+		content: '→';
+		position: absolute;
+		top: 50%;
+		right: -1.35rem;
+		color: var(--muted);
+		font-size: 0.95rem;
+		transform: translateY(-15%);
+	}
+
+	.stage {
+		font-family: var(--font-mono);
+		font-size: 0.6875rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: var(--muted);
+	}
+
+	.node {
+		padding: 0.45rem 0.6rem;
+		border: 1px solid var(--line);
+		border-radius: 4px;
+		background: var(--bg);
+		font-size: 0.875rem;
+		line-height: 1.3;
+	}
+
+	@media (max-width: 36rem) {
+		ol {
+			grid-auto-flow: row;
+			gap: 1.4rem;
+		}
+
+		li {
+			flex-direction: row;
+			flex-wrap: wrap;
+			align-items: center;
+		}
+
+		.stage {
+			flex: 0 0 6.5rem;
+		}
+
+		li:not(:last-child)::after {
+			content: '↓';
+			top: auto;
+			bottom: -1.3rem;
+			right: auto;
+			left: 7.25rem;
+			transform: none;
+		}
+	}
+</style>

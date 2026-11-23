@@ -1,34 +1,177 @@
 ---
-import { experienceGroups, experienceSection } from '../data/experience.ts';
+import { education, jobs } from '../data/experience.ts';
+import { stack } from '../data/skills.ts';
+import { about } from '../data/site.ts';
 ---
 
-<section class="section section--experience" id="experiencia" aria-labelledby="experience-heading">
-	<header class="section-header section-header--left">
-		<h2 class="section-title" id="experience-heading">{experienceSection.title}</h2>
-		<p class="section-subtitle section-subtitle--left">{experienceSection.subtitle}</p>
-	</header>
+<section id="experience" class="section wrap" aria-labelledby="experience-title">
+	<h2 id="experience-title" class="section-title"><span>Experience</span></h2>
 
-	{
-		experienceGroups.map((group) => (
-			<div class="experience-group">
-				<h3 class="experience-group__title">{group.label}</h3>
-				<ul class="experience-list">
-					{group.items.map((item) => (
-						<li class="experience-card">
-							<div class="experience-card__meta">
-								<time class="experience-card__period" datetime={item.period}>
-									{item.period}
-								</time>
-							</div>
-							<div class="experience-card__body">
-								<h4 class="experience-card__title">{item.title}</h4>
-								<p class="experience-card__org">{item.organization}</p>
-								<p class="experience-card__desc">{item.description}</p>
-							</div>
-						</li>
-					))}
-				</ul>
-			</div>
-		))
-	}
+	<ol class="jobs">
+		{
+			jobs.map((job) => (
+				<li>
+					<p class="period mono">{job.period}</p>
+					<div>
+						<h3>
+							{job.role}
+							<span class="org">{job.org}</span>
+						</h3>
+						<ul>
+							{job.points.map((point) => (
+								<li>{point}</li>
+							))}
+						</ul>
+					</div>
+				</li>
+			))
+		}
+	</ol>
+
+	<h3 class="sub">Education &amp; certifications</h3>
+	<ul class="edu">
+		{
+			education.map((item) => (
+				<li>
+					<span>
+						{item.title}, <span class="muted">{item.org}</span>
+					</span>
+					<span class="mono muted">{item.period}</span>
+				</li>
+			))
+		}
+	</ul>
 </section>
+
+<section id="stack" class="section wrap" aria-labelledby="stack-title">
+	<h2 id="stack-title" class="section-title"><span>Stack</span></h2>
+	<dl class="stack">
+		{
+			stack.map((row) => (
+				<div>
+					<dt class="mono">{row.group}</dt>
+					<dd>{row.items.join(', ')}</dd>
+				</div>
+			))
+		}
+	</dl>
+</section>
+
+<section id="about" class="section wrap" aria-labelledby="about-title">
+	<h2 id="about-title" class="section-title"><span>About</span></h2>
+	<div class="about">
+		{about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+		<p class="langs">
+			<span class="mono muted">Languages</span>
+			{about.languages.map((lang, i) => (
+				<span>
+					{lang.name} <span class="muted">({lang.level})</span>
+					{i < about.languages.length - 1 && <span aria-hidden="true"> · </span>}
+				</span>
+			))}
+		</p>
+	</div>
+</section>
+
+<style>
+	.jobs {
+		display: grid;
+		gap: 2rem;
+		padding: 0;
+		list-style: none;
+	}
+
+	.jobs > li {
+		display: grid;
+		grid-template-columns: 10.5rem 1fr;
+		gap: 1rem;
+	}
+
+	.period {
+		padding-top: 0.15rem;
+		color: var(--muted);
+		font-size: 0.8125rem;
+	}
+
+	h3 {
+		font-size: 1.0625rem;
+	}
+
+	.org {
+		display: block;
+		font-weight: 400;
+		color: var(--muted);
+	}
+
+	.jobs ul {
+		display: grid;
+		gap: 0.3rem;
+		margin-top: 0.5rem;
+		padding-left: 1.1rem;
+		font-size: 0.975rem;
+	}
+
+	.jobs ul li::marker {
+		color: var(--muted);
+	}
+
+	.sub {
+		margin-top: 3.25rem;
+		padding-bottom: 0.75rem;
+		border-bottom: 1px solid var(--line);
+		font-size: 1rem;
+	}
+
+	.edu {
+		padding: 0;
+		list-style: none;
+	}
+
+	.edu li {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 0.15rem 1rem;
+		padding: 0.7rem 0;
+		border-bottom: 1px solid var(--line);
+		font-size: 0.975rem;
+	}
+
+	.stack {
+		display: grid;
+		gap: 0.75rem;
+	}
+
+	.stack div {
+		display: grid;
+		grid-template-columns: 10.5rem 1fr;
+		gap: 1rem;
+	}
+
+	.stack dt {
+		padding-top: 0.15rem;
+		color: var(--muted);
+		font-size: 0.8125rem;
+	}
+
+	.about {
+		display: grid;
+		gap: 1rem;
+		max-width: 40rem;
+	}
+
+	.langs .mono {
+		margin-right: 0.6rem;
+		font-size: 0.75rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+	}
+
+	@media (max-width: 36rem) {
+		.jobs > li,
+		.stack div {
+			grid-template-columns: 1fr;
+			gap: 0.2rem;
+		}
+	}
+</style>

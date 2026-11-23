@@ -1,34 +1,74 @@
 ---
-import { contact, site } from '../data/site.ts';
+import { cvs, site } from '../data/site.ts';
 ---
 
-<section class="section section--contact" id="contacto" aria-labelledby="contact-heading">
-	<header class="section-header">
-		<h2 class="section-title" id="contact-heading">{contact.title}</h2>
-		<p class="section-subtitle section-subtitle--wide">{contact.intro}</p>
-		<p class="contact-availability">{contact.availability}</p>
-	</header>
-
-	<div class="contact-links">
-		<a class="contact-link" href={site.githubUrl} target="_blank" rel="noopener noreferrer">
-			<span class="contact-link__label">GitHub</span>
-			<span class="contact-link__hint">Repositorios y código</span>
-		</a>
-		<a class="contact-link" href={site.linkedinUrl} target="_blank" rel="noopener noreferrer">
-			<span class="contact-link__label">LinkedIn</span>
-			<span class="contact-link__hint">Perfil profesional</span>
-		</a>
-		<a class="contact-link" href={site.email}>
-			<span class="contact-link__label">Correo</span>
-			<span class="contact-link__hint">{site.emailDisplay}</span>
-		</a>
-	</div>
-
-	<p class="contact-footer">
-		<a class="contact-footer__link" href="#habilidades">Ver habilidades</a>
-		<span aria-hidden="true">·</span>
-		<a class="contact-footer__link" href={site.cvUrl} download>
-			Descargar CV
-		</a>
+<section id="contact" class="section wrap" aria-labelledby="contact-title">
+	<h2 id="contact-title" class="section-title"><span>Contact</span></h2>
+	<p class="pitch">
+		I’m looking for a remote role as a data engineer or software developer. If you think I could help your team,
+		write to me.
 	</p>
+	<p class="email"><a href={`mailto:${site.email}`}>{site.email}</a></p>
+	<ul class="channels">
+		<li>
+			<span class="mono muted">GitHub</span>
+			<a class="arrow-link" href={site.githubUrl} rel="me">{site.githubHandle}</a>
+		</li>
+		<li>
+			<span class="mono muted">LinkedIn</span>
+			<a class="arrow-link" href={site.linkedinUrl} rel="me">{site.linkedinHandle}</a>
+		</li>
+		{
+			cvs.map((cv) => (
+				<li>
+					<span class="mono muted">{cv.label.replace('CV · ', 'CV, ')}</span>
+					<a class="arrow-link down" href={cv.href} download>
+						PDF
+					</a>
+				</li>
+			))
+		}
+	</ul>
 </section>
+
+
+<style>
+	.pitch {
+		max-width: 36rem;
+		font-size: 1.125rem;
+	}
+
+	.email {
+		margin-top: 1.25rem;
+		font-size: clamp(1.25rem, 4vw, 1.75rem);
+		font-weight: 500;
+		letter-spacing: -0.015em;
+		overflow-wrap: anywhere;
+	}
+
+	.channels {
+		display: grid;
+		gap: 0.5rem;
+		margin-top: 2rem;
+		padding: 0;
+		list-style: none;
+	}
+
+	.channels li {
+		display: grid;
+		grid-template-columns: 10.5rem 1fr;
+		gap: 1rem;
+		align-items: baseline;
+	}
+
+	.channels .mono {
+		font-size: 0.8125rem;
+	}
+
+	@media (max-width: 30rem) {
+		.channels li {
+			grid-template-columns: 1fr;
+			gap: 0;
+		}
+	}
+</style>
