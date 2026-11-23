@@ -1,22 +1,15 @@
 ---
-// Pantalla de entrada: calavera animada a la izquierda y "Creado por GoodFellas Corp" a la derecha.
+// Pantalla de entrada GoodFellas Corp: la calavera se dibuja de un trazo, el moño rojo hace pop,
+// se enciende la brasa y el humo viaja hasta convertirse en "GoodFellas".
 // Se muestra una vez por sesión; se salta con clic, toque o cualquier tecla.
 // Sin JavaScript o con "reducir movimiento" no aparece y la página se ve directo.
-import calaveraRaw from '../assets/brand/goodfellas-calavera-animada.svg?raw';
-import wordmarkRaw from '../assets/brand/goodfellas-wordmark.svg?raw';
+import introRaw from '../assets/brand/goodfellas-intro.svg?raw';
 
-const calavera = calaveraRaw.replace('<svg ', '<svg class="gf-intro-logo" aria-hidden="true" ');
-const wordmark = wordmarkRaw.replace('<svg ', '<svg class="gf-intro-wordmark" role="img" aria-label="GoodFellas Corp" ');
+const intro = introRaw.replace('<svg ', '<svg class="gf-intro-art" role="img" aria-label="Creado por GoodFellas Corp" ');
 ---
 
 <div class="gf-intro" id="gf-intro" aria-hidden="true">
-	<div class="gf-intro-inner">
-		<Fragment set:html={calavera} />
-		<div class="gf-intro-text">
-			<p class="gf-intro-made">Creado por</p>
-			<Fragment set:html={wordmark} />
-		</div>
-	</div>
+	<Fragment set:html={intro} />
 	<span class="gf-intro-skip">Tocá para saltar</span>
 </div>
 
@@ -24,17 +17,26 @@ const wordmark = wordmarkRaw.replace('<svg ', '<svg class="gf-intro-wordmark" ro
 	(function () {
 		try {
 			var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-			if (!reduce && !sessionStorage.getItem('gf-intro')) {
-				document.documentElement.classList.add('gf-intro-on');
+			if (reduce || sessionStorage.getItem('gf-intro')) return;
+			// En pantallas verticales el texto va debajo de la calavera
+			if (window.innerWidth < window.innerHeight) {
+				var svg = document.querySelector('.gf-intro-art');
+				var texto = document.getElementById('gf-texto');
+				if (svg && texto) {
+					svg.classList.add('gf-v');
+					svg.setAttribute('viewBox', svg.getAttribute('data-vb-v'));
+					texto.setAttribute('transform', texto.getAttribute('data-t-v'));
+				}
 			}
+			document.documentElement.classList.add('gf-intro-on');
 		} catch (e) {}
 	})();
 </script>
 
 <script>
 	const root = document.documentElement;
-	const intro = document.getElementById("gf-intro");
-	const DURATION = 5900; // un ciclo completo: pitada + bocanada
+	const intro = document.getElementById('gf-intro');
+	const DURATION = 5800; // trazo + pop + humo que escribe el nombre
 
 	if (intro && root.classList.contains('gf-intro-on')) {
 		let done = false;
@@ -87,67 +89,15 @@ const wordmark = wordmarkRaw.replace('<svg ', '<svg class="gf-intro-wordmark" ro
 		pointer-events: none;
 	}
 
-	.gf-intro-inner {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: clamp(24px, 4vw, 64px);
-		padding: 0 16px;
-	}
-
-	.gf-intro-logo {
-		overflow: visible;
-		width: min(42vw, 62vh, 520px);
+	.gf-intro-art {
+		width: min(88vw, 1100px);
+		max-height: 80vh;
 		height: auto;
-		flex: none;
-		opacity: 0;
-		transform: scale(0.96);
-		animation: gf-intro-logo-in 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
-	}
-
-	.gf-intro-text {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-	}
-
-	.gf-intro-made {
-		margin: 0 0 clamp(8px, 1.5vw, 16px);
-		font-family: 'Inter', system-ui, sans-serif;
-		font-weight: 300;
-		font-size: clamp(0.7rem, 1.1vw, 0.95rem);
-		letter-spacing: 0.5em;
-		text-transform: uppercase;
-		color: rgba(244, 241, 234, 0.75);
-		opacity: 0;
-		animation: gf-intro-fade 1s ease 0.5s forwards;
-	}
-
-	.gf-intro-wordmark {
-		width: min(36vw, 440px);
-		height: auto;
-		opacity: 0;
-		animation: gf-intro-fade 1.2s ease 0.9s forwards;
-	}
-
-	@media (max-width: 720px) {
-		.gf-intro-inner {
-			flex-direction: column;
-			gap: 20px;
-		}
-
-		.gf-intro-logo {
 		overflow: visible;
-			width: min(80vw, 46vh);
-		}
+	}
 
-		.gf-intro-text {
-			align-items: center;
-		}
-
-		.gf-intro-wordmark {
-			width: min(80vw, 360px);
-		}
+	.gf-intro-art.gf-v {
+		width: min(92vw, 520px);
 	}
 
 	.gf-intro-skip {
@@ -167,13 +117,6 @@ const wordmark = wordmarkRaw.replace('<svg ', '<svg class="gf-intro-wordmark" ro
 	@keyframes gf-intro-fade {
 		to {
 			opacity: 1;
-		}
-	}
-
-	@keyframes gf-intro-logo-in {
-		to {
-			opacity: 1;
-			transform: scale(1);
 		}
 	}
 </style>
