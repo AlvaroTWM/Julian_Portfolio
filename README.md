@@ -1,46 +1,52 @@
-# Astro Starter Kit: Basics
+# julian-portafolio
+
+Personal site of Julian Arámbulo, data engineer and software developer in Asunción, Paraguay.
+Live at https://julian-portafolio.vercel.app
+
+## Stack
+
+- [Astro](https://astro.build), fully static, no client framework, English and Spanish
+- Plain CSS with light and dark themes (`src/styles/global.css`)
+- Self-hosted IBM Plex fonts via Fontsource
+- Deployed on Vercel
+
+## Structure
+
+```
+src/
+  content/     en.ts and es.ts (all copy, same shape), site.ts (shared links), types.ts
+  components/  Page, Header, Hero, Work, Flow (architecture diagrams), Experience, Contact, Footer, Intro
+  layouts/     Layout.astro (meta tags, Open Graph, JSON-LD)
+public/cv/     downloadable CVs (PDF)
+```
+
+All copy lives in `src/content`, one file per language, so editing text never means touching markup.
+The English page is `/` and the Spanish page is `/es/`.
+
+## Run locally
 
 ```sh
-npm create astro@latest -- --template basics
+npm install
+npm run dev      # http://localhost:4321
+npm run build    # outputs to dist/
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Intro
 
-## 🚀 Project Structure
+`Intro.astro` plays a ~2.6 s signature animation once per browser. Any click, key, scroll or
+touch skips it, it never runs with `prefers-reduced-motion`, and the footer signature replays it.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Tests
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+```sh
+npm run spell    # spell check in English and Spanish (cspell)
+npm test         # Playwright: builds the site, then runs the tests
+npm run check    # all of the above
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+The Playwright suite runs on desktop and mobile screen sizes and checks: language, title and meta
+tags; console errors and failed requests; accessibility with axe (WCAG 2.2 AA, light and dark
+mode); in-page anchors, unique ids, internal links and CV files; external links; images; no
+horizontal scroll from 320 px to 1280 px; the language switch and header navigation; the intro
+(plays once, can be skipped, stays off with reduced motion, and can be replayed); and that the English and Spanish
+content stay in sync. CI runs everything on every pull request.

@@ -1,74 +1,110 @@
 ---
-import { heroCta, site, technologies } from '../data/site.ts';
+import { site } from '../content/site.ts';
+import type { Content } from '../content/types.ts';
+
+interface Props {
+	t: Content;
+}
+
+const { t } = Astro.props;
+const { hero } = t;
 ---
 
-<div class="page">
-	<header class="top-bar">
-		<a class="github-btn" href={site.githubUrl} target="_blank" rel="noopener noreferrer">
-			Mi GitHub
-			<svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-				<path
-					d="M7 17L17 7M17 7H9M17 7v8"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"></path>
-			</svg>
-		</a>
-	</header>
+<section class="hero wrap" aria-labelledby="hero-name">
+	<h1 id="hero-name">
+		{site.name}
+		<span class="role">{hero.role}</span>
+	</h1>
+	<p class="meta mono">
+		<span>{hero.location}</span>
+		<span aria-hidden="true">·</span>
+		<span>{site.timezone}</span>
+		<span aria-hidden="true">·</span>
+		<span class="available">{hero.availability}</span>
+	</p>
 
-	<div class="hero-viewport">
-		<section class="intro">
-			<p class="location">
-				<svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-					<path
-						d="M12 21s7-4.5 7-10a7 7 0 1 0-14 0c0 5.5 7 10 7 10z"
-						stroke="currentColor"
-						stroke-width="1.5"
-						stroke-linecap="round"
-						stroke-linejoin="round"></path>
-					<circle cx="12" cy="11" r="2.5" stroke="currentColor" stroke-width="1.5"></circle>
-				</svg>
-				Desde {site.location}
-			</p>
+	<p class="lead">{hero.lead}</p>
+	{hero.body.map((paragraph) => <p class="body">{paragraph}</p>)}
 
-			<p class="greeting">Hola, soy {site.name},</p>
-			<h1 class="headline">
-				{site.roles.split(' & ').map((line, i, all) => (
-					<span class="headline__line">{i < all.length - 1 ? `${line} &` : line}</span>
-				))}
-			</h1>
-			<p class="tagline">{site.tagline}</p>
+	<p class="now">
+		<span class="mono muted">{t.ui.nowLabel}</span>
+		{hero.now}
+	</p>
 
-			<div class="hero-cta">
-				<a class="btn btn--primary" href={heroCta.primary.href}>{heroCta.primary.label}</a>
-				<a class="btn btn--secondary" href={heroCta.secondary.href} download>
-					{heroCta.secondary.label}
-				</a>
-				<a class="btn btn--secondary" href="#proyectos">Ver proyectos</a>
-				<a class="btn btn--ghost" href="#contacto">Contacto</a>
-			</div>
+	<ul class="actions inline-list">
+		<li><a class="arrow-link down" href={t.cvs[0].href} download>{t.ui.downloadCv}</a></li>
+		<li><a class="arrow-link" href={site.githubUrl} rel="me">GitHub</a></li>
+		<li><a class="arrow-link" href={site.linkedinUrl} rel="me">LinkedIn</a></li>
+		<li><a class="arrow-link" href={`mailto:${site.email}`}>{t.ui.email}</a></li>
+	</ul>
+</section>
 
-			<ul class="stack">
-				{
-					technologies.map((tech) => (
-						<li class="stack-item" data-label={tech.name} tabindex="0">
-							<img src={tech.icon} alt={tech.name} width="28" height="28" decoding="async" />
-						</li>
-					))
-				}
-			</ul>
-		</section>
+<style>
+	.hero {
+		padding-top: clamp(3rem, 10vw, 6rem);
+	}
 
-		<a class="scroll-hint" href="#sobre-mi" aria-label="Desplazarse a sobre mí">
-			<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-				<path
-					d="M12 5v12M12 17l-4-4M12 17l4-4"
-					stroke="currentColor"
-					stroke-width="1.75"
-					stroke-linecap="round"
-					stroke-linejoin="round"></path>
-			</svg>
-		</a>
-	</div>
-</div>
+	h1 {
+		font-size: clamp(2.25rem, 6vw, 3.25rem);
+		letter-spacing: -0.025em;
+	}
+
+	.role {
+		display: block;
+		margin-top: 0.35rem;
+		font-size: clamp(1.15rem, 2.6vw, 1.4rem);
+		font-weight: 400;
+		letter-spacing: -0.005em;
+		color: var(--muted);
+	}
+
+	.meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25rem 0.6rem;
+		margin-top: 1.25rem;
+		color: var(--muted);
+	}
+
+	.available::before {
+		content: '';
+		display: inline-block;
+		width: 0.5rem;
+		height: 0.5rem;
+		margin-right: 0.45rem;
+		border-radius: 50%;
+		background: #2f9e5b;
+		vertical-align: 0.05em;
+	}
+
+	.lead {
+		margin-top: clamp(2.5rem, 7vw, 3.5rem);
+		font-size: clamp(1.35rem, 3.2vw, 1.75rem);
+		line-height: 1.35;
+		font-weight: 500;
+		letter-spacing: -0.015em;
+	}
+
+	.body {
+		margin-top: 1rem;
+		max-width: 40rem;
+	}
+
+	.now {
+		margin-top: 1.5rem;
+		padding: 0.75rem 1rem;
+		border-left: 2px solid var(--accent);
+		background: var(--surface);
+	}
+
+	.now .mono {
+		margin-right: 0.5rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		font-size: 0.75rem;
+	}
+
+	.actions {
+		margin-top: 2rem;
+	}
+</style>

@@ -1,0 +1,50 @@
+{
+	"version": "0.2",
+	"language": "en,es",
+	"import": [
+		"@cspell/dict-es-es/cspell-ext.json"
+	],
+	"ignorePaths": [
+		"node_modules",
+		"dist",
+		"package-lock.json",
+		"public",
+		"src/assets",
+		"tests/*.ts"
+	],
+	"words": [
+		"alvaro",
+		"arambulo",
+		"Ar\u00e1mbulo",
+		"automations",
+		"backoffice",
+		"Dagster",
+		"fidelizaci\u00f3n",
+		"fontsource",
+		"github",
+		"goodfellas",
+		"hrefs",
+		"Ita\u00fa",
+		"ITTI",
+		"julian",
+		"linkedin",
+		"networkidle",
+		"pageerror",
+		"plex",
+		"requestfailed",
+		"Supabase",
+		"talentlink",
+		"talentlinkpy",
+		"Vierci",
+		"wcag"
+	],
+	"overrides": [
+		{
+			"filename": "src/content/es.ts",
+			"words": [
+				"cre\u00e9s",
+				"escribime"
+			]
+		}
+	]
+}

@@ -1,76 +1,120 @@
 ---
-// Pantalla de entrada GoodFellas Corp: la calavera se dibuja de un trazo, el moño rojo hace pop,
-// se enciende la brasa y el humo viaja hasta convertirse en "GoodFellas".
-// Se muestra una vez por sesión; se salta con clic, toque o cualquier tecla.
-// Sin JavaScript o con "reducir movimiento" no aparece y la página se ve directo.
+// GoodFellas Corp signature intro.
+// - About 2.6 s: the original animation runs at SPEED x its authored timing.
+// - Shown once per browser, never blocks: any click, key, scroll or touch skips it.
+// - Not shown without JavaScript or with "reduce motion". The footer signature replays it.
 import introRaw from '../assets/brand/goodfellas-intro.svg?raw';
+import type { Content } from '../content/types.ts';
 
-const intro = introRaw.replace('<svg ', '<svg class="gf-intro-art" role="img" aria-label="Creado por GoodFellas Corp" ');
+interface Props {
+	t: Content;
+}
+
+const { t } = Astro.props;
+
+const SPEED = 0.45; // 5.8 s authored -> ~2.6 s
+const DURATION_MS = Math.round(5800 * SPEED);
+
+const scaleTimes = (css: string) =>
+	css.replace(/(\d*\.?\d+)(ms|s)\b/g, (_, value: string, unit: string) => {
+		const scaled = Number(value) * SPEED;
+		return `${Number(scaled.toFixed(unit === 'ms' ? 1 : 3))}${unit}`;
+	});
+
+const intro = introRaw
+	.replace(/<style>([\s\S]*?)<\/style>/, (_, css: string) => `<style>${scaleTimes(css)}</style>`)
+	.replace('>CREADO POR<', `>${t.ui.introMadeBy}<`)
+	.replace('<svg ', `<svg class="gf-intro-art" role="img" aria-label="${t.ui.introLabel}" `);
 ---
 
-<div class="gf-intro" id="gf-intro" aria-hidden="true">
+<div class="gf-intro" id="gf-intro" aria-hidden="true" data-duration={DURATION_MS}>
 	<Fragment set:html={intro} />
-	<span class="gf-intro-skip">Tocá para saltar</span>
 </div>
 
 <script is:inline>
+	// Inline and synchronous on purpose: it runs before the rest of the page is painted,
+	// so the page never flashes and a skip works from the very first frame.
 	(function () {
-		try {
-			var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-			if (reduce || sessionStorage.getItem('gf-intro')) return;
-			// En pantallas verticales el texto va debajo de la calavera
-			if (window.innerWidth < window.innerHeight) {
-				var svg = document.querySelector('.gf-intro-art');
-				var texto = document.getElementById('gf-texto');
-				if (svg && texto) {
-					svg.classList.add('gf-v');
-					svg.setAttribute('viewBox', svg.getAttribute('data-vb-v'));
-					texto.setAttribute('transform', texto.getAttribute('data-t-v'));
-				}
-			}
-			document.documentElement.classList.add('gf-intro-on');
-		} catch (e) {}
-	})();
-</script>
-
-<script>
-	const root = document.documentElement;
-	const intro = document.getElementById('gf-intro');
-	const DURATION = 5800; // trazo + pop + humo que escribe el nombre
-
-	if (intro && root.classList.contains('gf-intro-on')) {
-		let done = false;
-		const close = () => {
-			if (done) return;
-			done = true;
-			try {
-				sessionStorage.setItem('gf-intro', '1');
-			} catch {}
-			intro.classList.add('gf-intro-out');
-			window.setTimeout(() => {
-				root.classList.remove('gf-intro-on');
-				intro.remove();
-			}, 800);
+		var root = document.documentElement;
+		var intro = document.getElementById('gf-intro');
+		if (!intro) return;
+		var duration = Number(intro.getAttribute('data-duration')) || 2600;
+		var skipEvents = ['pointerdown', 'keydown', 'wheel', 'touchstart'];
+		var timer = 0;
+		var reduceMotion = function () {
+			return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 		};
-		const timer = window.setTimeout(close, DURATION);
-		const skip = () => {
+
+		// Portrait screens: the text goes under the skull.
+		function fitOrientation(svg) {
+			var vertical = window.innerWidth < window.innerHeight;
+			var text = svg.querySelector('#gf-texto');
+			svg.classList.toggle('gf-v', vertical);
+			svg.setAttribute('viewBox', svg.getAttribute(vertical ? 'data-vb-v' : 'data-vb-h'));
+			if (!text) return;
+			if (!text.hasAttribute('data-t-h')) text.setAttribute('data-t-h', text.getAttribute('transform') || '');
+			var t = vertical ? text.getAttribute('data-t-v') : text.getAttribute('data-t-h');
+			if (t) text.setAttribute('transform', t);
+			else text.removeAttribute('transform');
+		}
+
+		function close() {
+			if (!root.classList.contains('gf-intro-on')) return;
 			window.clearTimeout(timer);
-			close();
+			skipEvents.forEach(function (type) {
+				window.removeEventListener(type, close, true);
+			});
+			try {
+				localStorage.setItem('gf-intro-seen', '1');
+			} catch (e) {}
+			intro.classList.add('gf-intro-out');
+			window.setTimeout(function () {
+				root.classList.remove('gf-intro-on');
+				intro.classList.remove('gf-intro-out');
+			}, 400);
+		}
+
+		function play() {
+			// A fresh copy of the SVG restarts its CSS animations from zero.
+			var svg = intro.querySelector('.gf-intro-art');
+			if (svg) {
+				var fresh = svg.cloneNode(true);
+				svg.parentNode.replaceChild(fresh, svg);
+				fitOrientation(fresh);
+			}
+			intro.classList.remove('gf-intro-out');
+			root.classList.add('gf-intro-on');
+			window.clearTimeout(timer);
+			timer = window.setTimeout(close, duration);
+			skipEvents.forEach(function (type) {
+				window.addEventListener(type, close, { capture: true, passive: true });
+			});
+		}
+
+		window.gfIntroReplay = function () {
+			if (reduceMotion()) return;
+			window.scrollTo(0, 0);
+			// Wait for the click that asked for the replay to finish before listening for skips.
+			window.setTimeout(play, 0);
 		};
-		intro.addEventListener('click', skip);
-		window.addEventListener('keydown', skip, { once: true });
-	} else {
-		intro?.remove();
-	}
+
+		document.addEventListener('click', function (event) {
+			var target = event.target;
+			if (target && target.closest && target.closest('[data-gf-replay]')) window.gfIntroReplay();
+		});
+
+		try {
+			if (reduceMotion() || localStorage.getItem('gf-intro-seen')) return;
+		} catch (e) {
+			return;
+		}
+		play();
+	})();
 </script>
 
 <style is:global>
 	.gf-intro {
 		display: none;
-	}
-
-	html.gf-intro-on {
-		overflow: hidden;
 	}
 
 	html.gf-intro-on .gf-intro {
@@ -81,7 +125,7 @@ const intro = introRaw.replace('<svg ', '<svg class="gf-intro-art" role="img" ar
 		place-items: center;
 		background: #000;
 		cursor: pointer;
-		transition: opacity 0.8s ease;
+		transition: opacity 0.4s ease;
 	}
 
 	.gf-intro.gf-intro-out {
@@ -90,33 +134,13 @@ const intro = introRaw.replace('<svg ', '<svg class="gf-intro-art" role="img" ar
 	}
 
 	.gf-intro-art {
-		width: min(88vw, 1100px);
-		max-height: 80vh;
+		width: min(80vw, 900px);
+		max-height: 70vh;
 		height: auto;
 		overflow: visible;
 	}
 
 	.gf-intro-art.gf-v {
-		width: min(92vw, 520px);
-	}
-
-	.gf-intro-skip {
-		position: absolute;
-		bottom: 24px;
-		left: 50%;
-		transform: translateX(-50%);
-		font-family: 'Inter', system-ui, sans-serif;
-		font-size: 0.7rem;
-		letter-spacing: 0.25em;
-		text-transform: uppercase;
-		color: rgba(255, 255, 255, 0.35);
-		opacity: 0;
-		animation: gf-intro-fade 1s ease 1.5s forwards;
-	}
-
-	@keyframes gf-intro-fade {
-		to {
-			opacity: 1;
-		}
+		width: min(80vw, 420px);
 	}
 </style>
