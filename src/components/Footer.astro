@@ -1,5 +1,12 @@
 ---
-import { site } from '../data/site.ts';
+import { site } from '../content/site.ts';
+import type { Content } from '../content/types.ts';
+
+interface Props {
+	t: Content;
+}
+
+const { t } = Astro.props;
 import skullRaw from '../../public/brand/goodfellas-calavera-linea.svg?raw';
 
 // Footer signature: the GoodFellas line-art skull, recolored to follow the theme.
@@ -8,14 +15,16 @@ const skull = skullRaw
 	.replace('<svg ', '<svg class="gf-mark" aria-hidden="true" focusable="false" ')
 	.replace(/<title>.*?<\/title>/, '')
 	.replaceAll('#F4F1EA', 'currentColor')
-	.replaceAll('"#000"', '"var(--bg)"');
+	.replaceAll('"#000"', '"var(--bg)"')
+	// The intro SVG uses the same ids, so prefix these to keep ids unique on the page.
+	.replace(/\sid="([^"]+)"/g, ' id="sig-$1"');
 
 const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer wrap">
 	<p>© {year} {site.name}</p>
-	<button type="button" class="signature" data-gf-replay title="Replay the intro">
+	<button type="button" class="signature" data-gf-replay title={t.ui.replayIntro} aria-label={`${t.ui.replayIntro}: GoodFellas Corp`}>
 		<Fragment set:html={skull} />
 		<span>GoodFellas Corp</span>
 	</button>

@@ -5,14 +5,16 @@ import '@fontsource/ibm-plex-sans/600.css';
 import '@fontsource/ibm-plex-mono/400.css';
 import '../styles/global.css';
 import Intro from '../components/Intro.astro';
-import { site } from '../data/site.ts';
+import { site } from '../content/site.ts';
+import type { Content } from '../content/types.ts';
 
 interface Props {
-	title?: string;
-	description?: string;
+	t: Content;
 }
 
-const { title = site.title, description = site.description } = Astro.props;
+const { t } = Astro.props;
+const { title, description } = t.meta;
+const altUrl = (path: string) => new URL(path, Astro.site).href;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL('/og.jpg', Astro.site);
 
@@ -20,7 +22,7 @@ const personSchema = {
 	'@context': 'https://schema.org',
 	'@type': 'Person',
 	name: site.name,
-	jobTitle: site.role,
+	jobTitle: 'Data Engineer & Software Developer',
 	url: site.url,
 	address: { '@type': 'PostalAddress', addressLocality: 'Asunción', addressCountry: 'PY' },
 	sameAs: [site.githubUrl, site.linkedinUrl],
@@ -29,13 +31,16 @@ const personSchema = {
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={t.lang}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>{title}</title>
 		<meta name="description" content={description} />
 		<link rel="canonical" href={canonical} />
+		<link rel="alternate" hreflang="en" href={altUrl('/')} />
+		<link rel="alternate" hreflang="es" href={altUrl('/es/')} />
+		<link rel="alternate" hreflang="x-default" href={altUrl('/')} />
 		<link rel="icon" href="/favicon.ico" sizes="48x48" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -45,14 +50,14 @@ const personSchema = {
 		<meta name="color-scheme" content="light dark" />
 
 		<meta property="og:type" content="website" />
-		<meta property="og:locale" content="en_US" />
+		<meta property="og:locale" content={t.locale} />
 		<meta property="og:url" content={canonical} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:image" content={ogImage} />
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
-		<meta property="og:image:alt" content={`${site.name}, ${site.role}`} />
+		<meta property="og:image:alt" content={t.meta.ogAlt} />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
@@ -61,8 +66,8 @@ const personSchema = {
 		<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
 	</head>
 	<body>
-		<a class="skip-link" href="#main">Skip to content</a>
-		<Intro />
+		<a class="skip-link" href="#main">{t.ui.skip}</a>
+		<Intro t={t} />
 		<slot />
 	</body>
 </html>

@@ -1,11 +1,16 @@
 ---
-import { education, jobs } from '../data/experience.ts';
-import { stack } from '../data/skills.ts';
-import { about } from '../data/site.ts';
+import type { Content } from '../content/types.ts';
+
+interface Props {
+	t: Content;
+}
+
+const { t } = Astro.props;
+const { education, jobs, stack, about } = t;
 ---
 
 <section id="experience" class="section wrap" aria-labelledby="experience-title">
-	<h2 id="experience-title" class="section-title"><span>Experience</span></h2>
+	<h2 id="experience-title" class="section-title"><span>{t.ui.sections.experience}</span></h2>
 
 	<ol class="jobs">
 		{
@@ -28,7 +33,7 @@ import { about } from '../data/site.ts';
 		}
 	</ol>
 
-	<h3 class="sub">Education &amp; certifications</h3>
+	<h3 class="sub">{t.ui.sections.education}</h3>
 	<ul class="edu">
 		{
 			education.map((item) => (
@@ -44,7 +49,7 @@ import { about } from '../data/site.ts';
 </section>
 
 <section id="stack" class="section wrap" aria-labelledby="stack-title">
-	<h2 id="stack-title" class="section-title"><span>Stack</span></h2>
+	<h2 id="stack-title" class="section-title"><span>{t.ui.sections.stack}</span></h2>
 	<dl class="stack">
 		{
 			stack.map((row) => (
@@ -58,11 +63,11 @@ import { about } from '../data/site.ts';
 </section>
 
 <section id="about" class="section wrap" aria-labelledby="about-title">
-	<h2 id="about-title" class="section-title"><span>About</span></h2>
+	<h2 id="about-title" class="section-title"><span>{t.ui.sections.about}</span></h2>
 	<div class="about">
 		{about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
 		<p class="langs">
-			<span class="mono muted">Languages</span>
+			<span class="mono muted">{t.ui.languagesLabel}</span>
 			{about.languages.map((lang, i) => (
 				<span>
 					{lang.name} <span class="muted">({lang.level})</span>

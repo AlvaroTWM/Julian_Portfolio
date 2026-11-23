@@ -1,33 +1,41 @@
 ---
-import { cvs, intro, site } from '../data/site.ts';
+import { site } from '../content/site.ts';
+import type { Content } from '../content/types.ts';
+
+interface Props {
+	t: Content;
+}
+
+const { t } = Astro.props;
+const { hero } = t;
 ---
 
 <section class="hero wrap" aria-labelledby="hero-name">
 	<h1 id="hero-name">
 		{site.name}
-		<span class="role">{site.role}</span>
+		<span class="role">{hero.role}</span>
 	</h1>
 	<p class="meta mono">
-		<span>{site.location}</span>
+		<span>{hero.location}</span>
 		<span aria-hidden="true">·</span>
 		<span>{site.timezone}</span>
 		<span aria-hidden="true">·</span>
-		<span class="available">{site.availability}</span>
+		<span class="available">{hero.availability}</span>
 	</p>
 
-	<p class="lead">{intro.lead}</p>
-	{intro.body.map((paragraph) => <p class="body">{paragraph}</p>)}
+	<p class="lead">{hero.lead}</p>
+	{hero.body.map((paragraph) => <p class="body">{paragraph}</p>)}
 
 	<p class="now">
-		<span class="mono muted">Now</span>
-		{intro.now.label} at {intro.now.org}, since {intro.now.since}.
+		<span class="mono muted">{t.ui.nowLabel}</span>
+		{hero.now}
 	</p>
 
 	<ul class="actions inline-list">
-		<li><a class="arrow-link down" href={cvs[0].href} download>Download CV</a></li>
+		<li><a class="arrow-link down" href={t.cvs[0].href} download>{t.ui.downloadCv}</a></li>
 		<li><a class="arrow-link" href={site.githubUrl} rel="me">GitHub</a></li>
 		<li><a class="arrow-link" href={site.linkedinUrl} rel="me">LinkedIn</a></li>
-		<li><a class="arrow-link" href={`mailto:${site.email}`}>Email</a></li>
+		<li><a class="arrow-link" href={`mailto:${site.email}`}>{t.ui.email}</a></li>
 	</ul>
 </section>
 

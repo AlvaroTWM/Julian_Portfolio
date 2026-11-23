@@ -1,18 +1,19 @@
 ---
 // Small architecture diagram: stages from left to right (top to bottom on phones).
 // Plain HTML instead of an image so it stays sharp, themeable and readable by screen readers.
-import type { FlowStage } from '../data/projects.ts';
+import type { FlowStage } from '../content/types.ts';
 
 interface Props {
 	stages: FlowStage[];
 	label: string;
+	caption: string;
 }
 
-const { stages, label } = Astro.props;
+const { stages, label, caption } = Astro.props;
 ---
 
 <figure class="flow">
-	<figcaption class="mono">Architecture</figcaption>
+	<figcaption class="mono">{caption}</figcaption>
 	<ol aria-label={label}>
 		{
 			stages.map((stage) => (

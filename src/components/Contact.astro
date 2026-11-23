@@ -1,13 +1,17 @@
 ---
-import { cvs, site } from '../data/site.ts';
+import { site } from '../content/site.ts';
+import type { Content } from '../content/types.ts';
+
+interface Props {
+	t: Content;
+}
+
+const { t } = Astro.props;
 ---
 
 <section id="contact" class="section wrap" aria-labelledby="contact-title">
-	<h2 id="contact-title" class="section-title"><span>Contact</span></h2>
-	<p class="pitch">
-		I’m looking for a remote role as a data engineer or software developer. If you think I could help your team,
-		write to me.
-	</p>
+	<h2 id="contact-title" class="section-title"><span>{t.ui.sections.contact}</span></h2>
+	<p class="pitch">{t.contact.pitch}</p>
 	<p class="email"><a href={`mailto:${site.email}`}>{site.email}</a></p>
 	<ul class="channels">
 		<li>
@@ -19,9 +23,9 @@ import { cvs, site } from '../data/site.ts';
 			<a class="arrow-link" href={site.linkedinUrl} rel="me">{site.linkedinHandle}</a>
 		</li>
 		{
-			cvs.map((cv) => (
+			t.cvs.map((cv) => (
 				<li>
-					<span class="mono muted">{cv.label.replace('CV · ', 'CV, ')}</span>
+					<span class="mono muted">{t.contact.cvLabel(cv.label)}</span>
 					<a class="arrow-link down" href={cv.href} download>
 						PDF
 					</a>

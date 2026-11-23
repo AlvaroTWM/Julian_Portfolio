@@ -1,19 +1,35 @@
 ---
-import { cvs, site } from '../data/site.ts';
+import { site } from '../content/site.ts';
+import type { Content } from '../content/types.ts';
 
+interface Props {
+	t: Content;
+}
+
+const { t } = Astro.props;
 const links = [
-	{ label: 'Work', href: '#work' },
-	{ label: 'Experience', href: '#experience' },
-	{ label: 'Contact', href: '#contact' },
+	{ label: t.ui.nav.work, href: '#work' },
+	{ label: t.ui.nav.experience, href: '#experience' },
+	{ label: t.ui.nav.contact, href: '#contact' },
 ];
 ---
 
 <header class="site-header wrap">
-	<a class="site-name" href="/">{site.name}</a>
-	<nav aria-label="Main">
+	<a class="site-name" href={t.path}>{site.name}</a>
+	<nav aria-label={t.ui.nav.mainLabel}>
 		<ul>
 			{links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
-			<li><a href={cvs[0].href} class="cv-link">CV</a></li>
+			<li><a href={t.cvs[0].href} class="cv-link">{t.ui.nav.cv}</a></li>
+			<li>
+				<a
+					href={t.ui.switchLang.href}
+					hreflang={t.lang === 'en' ? 'es' : 'en'}
+					lang={t.lang === 'en' ? 'es' : 'en'}
+					class="lang-link"
+					title={t.ui.switchLang.label}
+					>{t.ui.switchLang.short}<span class="visually-hidden">, {t.ui.switchLang.label}</span></a
+				>
+			</li>
 		</ul>
 	</nav>
 </header>
@@ -52,13 +68,22 @@ const links = [
 		color: var(--text);
 	}
 
+	.lang-link {
+		padding: 0.05rem 0.4rem;
+		border: 1px solid var(--line);
+		border-radius: 4px;
+		font-family: var(--font-mono);
+		font-size: 0.8125rem;
+	}
+
 	.cv-link {
 		color: var(--text);
 		font-weight: 500;
 	}
 
 	@media (max-width: 30rem) {
-		nav li:not(:last-child):not(:first-child) {
+		nav li:nth-child(2),
+		nav li:nth-child(3) {
 			display: none;
 		}
 	}

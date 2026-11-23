@@ -1,12 +1,20 @@
 ---
 import Flow from './Flow.astro';
-import { caseStudies, otherProjects } from '../data/projects.ts';
+import type { Content } from '../content/types.ts';
+
+interface Props {
+	t: Content;
+}
+
+const { t } = Astro.props;
+const { caseStudies, otherProjects } = t;
+const L = t.ui.caseLabels;
 ---
 
 <section id="work" class="section wrap" aria-labelledby="work-title">
 	<h2 id="work-title" class="section-title">
-		<span>Selected work</span>
-		<span>{caseStudies.length} case studies</span>
+		<span>{t.ui.sections.work}</span>
+		<span>{t.ui.sections.caseCount(caseStudies.length)}</span>
 	</h2>
 
 	<div class="cases">
@@ -17,7 +25,7 @@ import { caseStudies, otherProjects } from '../data/projects.ts';
 						{study.kind}
 						<span aria-hidden="true"> · </span>
 						{study.year}
-						{study.status === 'in-progress' && <span class="badge">In progress</span>}
+						{study.status === 'in-progress' && <span class="badge">{L.inProgress}</span>}
 					</p>
 					<h3 id={`${study.id}-title`}>{study.title}</h3>
 					<p class="summary">{study.summary}</p>
@@ -36,11 +44,11 @@ import { caseStudies, otherProjects } from '../data/projects.ts';
 
 					<dl>
 						<div>
-							<dt>Problem</dt>
+							<dt>{L.problem}</dt>
 							<dd>{study.problem}</dd>
 						</div>
 						<div>
-							<dt>What I built</dt>
+							<dt>{L.built}</dt>
 							<dd>
 								<ul>
 									{study.built.map((item) => (
@@ -50,15 +58,15 @@ import { caseStudies, otherProjects } from '../data/projects.ts';
 							</dd>
 						</div>
 						<div>
-							<dt>Result</dt>
+							<dt>{L.result}</dt>
 							<dd>{study.result}</dd>
 						</div>
 					</dl>
 
-					<Flow stages={study.flow} label={`${study.title} architecture`} />
+					<Flow stages={study.flow} label={L.diagramLabel(study.title)} caption={L.architecture} />
 
 					<p class="stack mono">
-						<span class="visually-hidden">Stack: </span>
+						<span class="visually-hidden">{L.stack}: </span>
 						{study.stack.join(' · ')}
 					</p>
 
@@ -79,7 +87,7 @@ import { caseStudies, otherProjects } from '../data/projects.ts';
 		}
 	</div>
 
-	<h3 class="other-title">Also built</h3>
+	<h3 class="other-title">{t.ui.sections.alsoBuilt}</h3>
 	<ul class="other">
 		{
 			otherProjects.map((project) => (
